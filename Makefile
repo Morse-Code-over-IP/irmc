@@ -1,7 +1,7 @@
 SRC = irmc.c
 OBJ = ${SRC:.c=.o}
-LDFLAGS = -L/usr/local/lib -lm -lmorse
-CFLAGS = -I/usr/local/include -Wall 
+LDFLAGS = -L/usr/local/lib -L/opt/local/lib  -lm -lmorse
+CFLAGS = -I/usr/local/include -I/opt/local/include -Wall 
 INSTALLDIR = ${HOME}/bin
 
 all: options irmc 

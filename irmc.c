@@ -89,7 +89,6 @@ long tx_timer = 0;
 #define TX_TIMEOUT 240.0 
 #define KEEPALIVE_CYCLE 100
 
-char soundcard[] = "/dev/audio";
 long key_press_t1;
 long key_release_t1;
 int last_message = 0;
