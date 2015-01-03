@@ -1,7 +1,7 @@
-SRC = irmc.c sound.c
+SRC = irmc.c
 OBJ = ${SRC:.c=.o}
-LDFLAGS = -lm -lossaudio
-CFLAGS = -Wall  
+LDFLAGS = -L/usr/local/lib -lm -lmorse
+CFLAGS = -I/usr/local/include -Wall 
 INSTALLDIR = ${HOME}/bin
 
 all: options irmc 

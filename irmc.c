@@ -11,13 +11,14 @@
 #include <sys/socket.h>
 #include <math.h>
 #include <fcntl.h>
-#ifdef __MACH__
 #include <morse/beep.h>
+#ifdef __MACH__
 #define LIBOSS_INTERNAL
 #include <liboss/soundcard.h> //will not be used for audio any more
 #else
-#include <soundcard.h>
-#include "sound.h"
+#include <linux/ioctl.h>
+#include <asm-generic/ioctl.h>
+#include <asm-generic/termios.h>
 #endif 
 #include <signal.h>
 #include <arpa/inet.h>
@@ -252,15 +253,10 @@ commandmode(void)
 	
 	if((strncmp(cmd, "aon", 3)) == 0){
 		audio_status = 1;
-#ifdef __MACH__
-#else
-		fd_speaker = open_audio_device(soundcard, O_WRONLY);
-#endif
 		return 0;
 	}
 	if((strncmp(cmd, "aoff", 3)) == 0){
 		audio_status = 0;
-		close(fd_speaker);
 		return 0;
 	}
 	printf("?\n");
@@ -387,11 +383,7 @@ int main(int argc, char *argv[])
 	inet_ntop(p->ai_family, get_in_addr((struct sockaddr *)p->ai_addr),
 			s, sizeof s);
 	printf("irmc: connected to %s\n", s);
-#ifdef __MACH__
 	beep_init();
-#else
-	fd_speaker = open_audio_device(soundcard, O_WRONLY);
-#endif
 	fd_serial = open(serialport, O_RDWR | O_NOCTTY | O_NDELAY);
 	if(fd_serial == -1) {
     		printf("irmc: unable to open serial port.\n");
@@ -399,9 +391,6 @@ int main(int argc, char *argv[])
 	freeaddrinfo(servinfo); /* all done with this structure */
 
 	key_release_t1 = fastclock();
-#ifndef __MACH__
-	init_sound(); // TODO rename to init sinus!
-#endif
 	identifyclient();
     
 	/* Main Loop */
@@ -438,7 +427,6 @@ int main(int argc, char *argv[])
 					default:
 						if(audio_status == 1)
 						{ 
-#ifdef __MACH__
 
 int length = rx_data_packet.code[i];
 if(length == 0 || abs(length) > 2000) {
@@ -453,9 +441,6 @@ else
 beep(1000.0, length/1000.);
 }
 }
-#else
-							play_code_element (rx_data_packet.code[i]);
-#endif
 						}
 						break;
 					}
@@ -500,9 +485,6 @@ beep(1000.0, length/1000.);
 
 	send(fd_socket, &disconnect_packet, sizeof(disconnect_packet), 0);	
 	close(fd_socket);
-	close(fd_speaker);
-#ifdef __MACH__
-#endif
 	close(fd_serial);
 
 	exit(0); 
