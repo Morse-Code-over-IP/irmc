@@ -1,5 +1,5 @@
 # What is IRMC?
-IRMC stands for Internet Relay Morse Code. It implements the CWCom protocol
+IRMC stands for Internet Relay Morse Code. It implements the [CWCom protocol](http://kob.sdf.org/morsekob/docs/cwcom.pdf) as adopted by [MorseKOB](http://kob.sdf.org/morsekob/docs/history.pdf).
 
 ## Why morse code over IP?
 Why not? A number of different approaches for CW over IP exist. An early implementation has been the CWCom protocol, 
@@ -48,6 +48,10 @@ For example:
 ## Morse KOB Servers
 * faeroes.sdf.org 7890
 * mtc-kob.dyndns.org 7890
+A current list of servers if provided on the [MorseKOB Website](http://mtc-kob.dyndns.org).
+
+## Hardware interface options
+A good description on how to build differnt interfaces (telegraph key, sounder or both) is given on the [MorseKOB Website](http://kob.sdf.org/morsekob/interface.htm). Landline telegraphs use "closed circuits" for communications; if you have built one at home, you may also use the [loop interface](http://kob.sdf.org/morsekob/docs/loopinterface.pdf).
 
 
 # References
