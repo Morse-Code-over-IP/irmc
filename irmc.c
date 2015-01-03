@@ -11,10 +11,25 @@
 #include <sys/socket.h>
 #include <math.h>
 #include <fcntl.h>
+#ifdef __MACH__
+#include <morse/beep.h>
+#define LIBOSS_INTERNAL
+#include <liboss/soundcard.h> //will not be used for audio any more
+#else
 #include <soundcard.h>
+#include "sound.h"
+#endif 
 #include <signal.h>
 #include <arpa/inet.h>
-#include "sound.h"
+#include <time.h>
+#include <sys/time.h>
+#include <stdio.h>
+ 
+#ifdef __MACH__
+#include <mach/clock.h>
+#include <mach/mach.h>
+#endif
+ 
 
 #define MAXDATASIZE 1024 // max number of bytes we can get at once 
 
@@ -83,6 +98,22 @@ char last_sender[16];
 int translate = 0;
 int audio_status = 1;
 
+/* portable time, as listed in https://gist.github.com/jbenet/1087739  */
+void current_utc_time(struct timespec *ts) {
+#ifdef __MACH__ // OS X does not have clock_gettime, use clock_get_time
+  clock_serv_t cclock;
+  mach_timespec_t mts;
+  host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &cclock);
+  clock_get_time(cclock, &mts);
+  mach_port_deallocate(mach_task_self(), cclock);
+  ts->tv_sec = mts.tv_sec;
+  ts->tv_nsec = mts.tv_nsec;
+#else
+  clock_gettime(CLOCK_REALTIME, ts);
+#endif
+ 
+}
+
 /* a better clock() in milliseconds */
 long 
 fastclock(void)
@@ -90,7 +121,7 @@ fastclock(void)
 	struct timespec t;
 	long r;
 
-	clock_gettime(CLOCK_REALTIME, &t);
+	current_utc_time (&t);
 	r = t.tv_sec * 1000;
 	r = r + t.tv_nsec / 1000000;
 	return r;
@@ -221,7 +252,10 @@ commandmode(void)
 	
 	if((strncmp(cmd, "aon", 3)) == 0){
 		audio_status = 1;
+#ifdef __MACH__
+#else
 		fd_speaker = open_audio_device(soundcard, O_WRONLY);
+#endif
 		return 0;
 	}
 	if((strncmp(cmd, "aoff", 3)) == 0){
@@ -277,7 +311,6 @@ int main(int argc, char *argv[])
 	int channel;
 	char id[128];
 	char serialport[64];
-
 
 	if (argc < 4) {
 	    fprintf(stderr," %i usage: irmc [hostname] [port] [channel] [id] [serialport]\n", argc);
@@ -354,7 +387,11 @@ int main(int argc, char *argv[])
 	inet_ntop(p->ai_family, get_in_addr((struct sockaddr *)p->ai_addr),
 			s, sizeof s);
 	printf("irmc: connected to %s\n", s);
+#ifdef __MACH__
+	beep_init();
+#else
 	fd_speaker = open_audio_device(soundcard, O_WRONLY);
+#endif
 	fd_serial = open(serialport, O_RDWR | O_NOCTTY | O_NDELAY);
 	if(fd_serial == -1) {
     		printf("irmc: unable to open serial port.\n");
@@ -362,7 +399,9 @@ int main(int argc, char *argv[])
 	freeaddrinfo(servinfo); /* all done with this structure */
 
 	key_release_t1 = fastclock();
-	init_sound();
+#ifndef __MACH__
+	init_sound(); // TODO rename to init sinus!
+#endif
 	identifyclient();
     
 	/* Main Loop */
@@ -397,8 +436,27 @@ int main(int argc, char *argv[])
 						message(4);
 						break;
 					default:
-						if(audio_status == 1) 
+						if(audio_status == 1)
+						{ 
+#ifdef __MACH__
+
+int length = rx_data_packet.code[i];
+if(length == 0 || abs(length) > 2000) {
+}
+else
+{
+if(length < 0) {
+beep(0.0, abs(length)/1000.);
+}
+else
+{
+beep(1000.0, length/1000.);
+}
+}
+#else
 							play_code_element (rx_data_packet.code[i]);
+#endif
+						}
 						break;
 					}
 				}
@@ -443,6 +501,8 @@ int main(int argc, char *argv[])
 	send(fd_socket, &disconnect_packet, sizeof(disconnect_packet), 0);	
 	close(fd_socket);
 	close(fd_speaker);
+#ifdef __MACH__
+#endif
 	close(fd_serial);
 
 	exit(0); 
