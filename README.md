@@ -32,14 +32,14 @@ TBD: Driver: serial - 2usb!
 
 # How to use:
 
-usage: `irmc [hostname] [port] [channel] [id] [serialport``
-I.e.: `./irmc mtc-kob.dyndns.org 7890 103 MyID /dev/tty.usbserial´
+The usage is: `irmc [hostname] [port] [channel] [id] [serialport`
+
+For example:
+`./irmc mtc-kob.dyndns.org 7890 103 MyID /dev/tty.usbserial´
 
 ## Morse KOB Servers
 * faeroes.sdf.org 7890
 * mtc-kob.dyndns.org 7890
-
-Linux:
 
 
 # References
