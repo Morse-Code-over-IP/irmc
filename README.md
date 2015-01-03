@@ -1,5 +1,5 @@
 # What is IRMC?
-IRMC stands for Internet Relay Morse Code. It implements the [CWCom protocol](http://kob.sdf.org/morsekob/docs/cwcom.pdf) as adopted by [MorseKOB](http://kob.sdf.org/morsekob/docs/history.pdf).
+IRMC stands for Internet Relay Morse Code. It implements the [CWCom protocol](http://kob.sdf.org/morsekob/docs/cwcom.pdf) as adopted by [MorseKOB](http://kob.sdf.org/morsekob/docs/history.pdf). You can try out the software in a [browser](http://kob.sdf.org/morsekob/morsekob30/index.htm) using Java.
 
 ## Why morse code over IP?
 Why not? A number of different approaches for CW over IP exist. An early implementation has been the CWCom protocol, 
@@ -33,6 +33,12 @@ LD_LIBRARY_PATH=/usr/local/lib ./irmc mtc-kob.dyndns.org 7890 33 123
 ```
 
 ## OSX (Yosemite)
+
+## Testing
+If you don't want to mess with your security settings, you can download the Java implementation of MorseKOB:
+```
+wget http://kob.sdf.org/morsekob/morsekob30/MorseKOB.jar
+```
 
 ### Serial Drivers
 TBD: Driver: serial - 2usb!
