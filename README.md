@@ -1,19 +1,30 @@
-=== WIP - Snipplets ===
+How to build on Debian
+apt-get install -y alsa-oss oss-compat build-essential autoconf libao-dev libtool
+wget https://github.com/8cH9azbsFifZ/morse/archive/v0.1.tar.gz
+tar xzf v0.1.tar.gz
+cd morse-0.1
+libtoolize
+./autogen.sh
+./configure  --with-portaudio
+make
+sudo make install
+
+
+How to build on OSX:
+TBD: Driver: serial - 2usb!
+
+TBD: OSX - howto install dependencies
+https://github.com/8cH9azbsFifZ/morse/archive/v0.1.tar.gz
+
+
 How to use:
 
  1 usage: irmc [hostname] [port] [channel] [id] [serialport]
 ./irmc mtc-kob.dyndns.org 7890 103 123 /dev/tty.usbserial 
 faeroes.sdf.org.7890
 
-
-TBD: Driver: 
-serial - 2usb!
-
-TBD: OSX - howto install dependencies
-
-Run under Linux snipplets
+Linux:
 LD_LIBRARY_PATH=/usr/local/lib ./irmc mtc-kob.dyndns.org 7890 33 123 
-
 
 
 === Original post ===
