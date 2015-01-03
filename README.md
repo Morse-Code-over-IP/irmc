@@ -1,4 +1,12 @@
 # What is IRMC?
+IRMC stands for Internet Relay Morse Code. It implements the CWCom protocol
+
+## Why morse code over IP?
+Why not? A number of different approaches for CW over IP exist. An early implementation has been the CWCom protocol, 
+which has been the basis for Morse KOB, a ready-to-use software. Both chat programs have been written for CW exclusively and are compatible. An alternative implementation in C exists as well as a port to the ATMEL AVR Microcontroller. 
+
+Besides a variety of other approaches exist, for example an IRC plugin (CWirc, Pierre-Philippe Coupard: http://myspace.voo.be/pcoupard/cwirc/), a JavaScript implementation (Burak Kanber: http://morsecode.me), a bandwidth-eating UDP implementation (Morse over IP, Hans Liss: http://hans.liss.pp.se/node/343), a chat for iOS (CW with me (iOS), Nick Garner: http://pignology.net/cwwithme.html) or a modulated CW over IP using Mumble (iCW: https://sites.google.com/site/icwoip/).
+
 
 # How to build?
 ## Install dependency: morse keyer library
@@ -44,7 +52,7 @@ For example:
 
 # References
 
-## Original post
+## Original post by Fernan Bolando (VE4FEB)
 Copied on 20150103 from http://fernski.blogspot.de/2013/03/internet-relay-morsecode.html
 
 > I have been using cwcom to practice sending morsecode, unfortunately my main computer at home is running openbsd and it has gotten harder to gain access to a reliable MS Windows machine. So I wrote my own client that works on openbsd. 
@@ -69,7 +77,9 @@ Copied on 20150103 from http://fernski.blogspot.de/2013/03/internet-relay-morsec
 > John Samin - http://www.mrx.com.au/
 
 
-
 ## Resources
-
-
+* CWCom, John Samin (VK1EME): http://www.mrx.com.au/d_cwcom.htm
+* Morse KOB, Less Kerr: https://sites.google.com/site/morsekob/ and http://kob.sdf.org/morsekob/
+* Relay server for CW communicator and morse KOB: http://morsecode.dc3.com:7890 
+* Sources for the Relay Server: http://sourceforge.net/projects/morse-rss-news/
+* MorseKOB for AT Mega, Fernan Bolando (VE4FEB): http://fernski.blogspot.de/2013/05/sending-morsecode-via-atmega.html
