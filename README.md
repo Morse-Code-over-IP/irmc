@@ -1,10 +1,8 @@
 # What is IRMC?
 
 # How to build?
-## Debian (Wheezy)
-
-How to build on Debian
-apt-get install -y alsa-oss oss-compat build-essential autoconf libao-dev libtool
+## Install dependency: morse keyer library
+```
 wget https://github.com/8cH9azbsFifZ/morse/archive/v0.1.tar.gz
 tar xzf v0.1.tar.gz
 cd morse-0.1
@@ -13,23 +11,35 @@ libtoolize
 ./configure  --with-portaudio
 make
 sudo make install
+```
 
-## OSX
-How to build on OSX:
+## Debian (Wheezy)
+Some dependencies have to be installed:
+```
+apt-get install -y alsa-oss oss-compat build-essential autoconf libao-dev libtool
+```
+Afterwards compilation with `make` should work. If something went wrong, you may have
+to adjust your `LD_LIBRARY_PATH`. Alternatively try:
+```
+LD_LIBRARY_PATH=/usr/local/lib ./irmc mtc-kob.dyndns.org 7890 33 123 
+```
+
+## OSX (Yosemite)
+
+### Serial Drivers
 TBD: Driver: serial - 2usb!
-
-TBD: OSX - howto install dependencies
-https://github.com/8cH9azbsFifZ/morse/archive/v0.1.tar.gz
 
 
 # How to use:
 
- 1 usage: irmc [hostname] [port] [channel] [id] [serialport]
-./irmc mtc-kob.dyndns.org 7890 103 123 /dev/tty.usbserial 
-faeroes.sdf.org.7890
+usage: `irmc [hostname] [port] [channel] [id] [serialport``
+I.e.: `./irmc mtc-kob.dyndns.org 7890 103 MyID /dev/tty.usbserial´
+
+## Morse KOB Servers
+* faeroes.sdf.org 7890
+* mtc-kob.dyndns.org 7890
 
 Linux:
-LD_LIBRARY_PATH=/usr/local/lib ./irmc mtc-kob.dyndns.org 7890 33 123 
 
 
 # References
