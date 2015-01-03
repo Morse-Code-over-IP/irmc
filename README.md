@@ -63,13 +63,13 @@ Copied on 20150103 from http://fernski.blogspot.de/2013/03/internet-relay-morsec
 > 
 > File(s)
 > http://fernan.bitbucket.org/irmc.tgz
+> The following people have helped me a lot to learn the protocols and setting up test servers.
+> Les Kerr -  https://home.comcast.net/~morsekob/
+> Bob Denny - http://morse-rss-news.sourceforge.net/
+> John Samin - http://www.mrx.com.au/
 
 
 
 ## Resources
-The following people have helped me a lot to learn the protocols and setting up test servers.
-Les Kerr -  https://home.comcast.net/~morsekob/
-Bob Denny - http://morse-rss-news.sourceforge.net/
-John Samin - http://www.mrx.com.au/
 
 
