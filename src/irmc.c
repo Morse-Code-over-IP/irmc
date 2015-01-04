@@ -31,15 +31,15 @@
 #include <mach/mach.h>
 #endif
  
+#define DEBUG 0
 
 #define MAXDATASIZE 1024 // max number of bytes we can get at once 
 
-#define DIS 0x0002 // for command packet
-#define DAT 0x0003 // for command packet
-#define CON 0x0004
+// Structures for the packets: unsigned short command
+#define DIS 0x0002 // disconnect
+#define DAT 0x0003 
+#define CON 0x0004 // connect
 #define ACK 0x0005
-
-#define DEBUG 0
 
 // This structure will be used to (dis-)connect to KOB servers
 struct command_packet_format{
