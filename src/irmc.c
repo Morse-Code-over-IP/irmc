@@ -163,7 +163,7 @@ txloop (void)
 			if(tx_timeout > TX_TIMEOUT) return;
 		}
 		key_press_t1 = fastclock();	
-		if(tx_data_packet.n == 50) {
+		if(tx_data_packet.n == SIZE_CODE) {
 			printf("irmc: warning packet is full.\n");
 			return;
 		}
@@ -348,7 +348,7 @@ int main(int argc, char *argv[])
 			printf("version: %s\n", rx_data_packet.status);
 			printf("n: %i\n", rx_data_packet.n);
 			printf("code:\n");
-			for(i = 0; i < 51; i++)printf("%i ", rx_data_packet.code[i]); printf("\n");
+			for(i = 0; i < SIZE_CODE; i++)printf("%i ", rx_data_packet.code[i]); printf("\n");
 		#endif
 			if(rx_data_packet.n > 0 && rx_sequence != rx_data_packet.sequence){
 				message(2);

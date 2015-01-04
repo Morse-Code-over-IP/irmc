@@ -6,15 +6,19 @@
 #define CON 0x0004 // connect
 #define ACK 0x0005
 
+#define SIZE_COMMAND_PACKET 4
+#define SIZE_DATA_PACKET 496
+#define SIZE_DATA_PACKET_PAYLOAD 492 // = SIZE_DATA_PACKET - SIZE_COMMAND_PACKET
+
+#define SIZE_ID 128
+#define SIZE_STATUS 128
+#define SIZE_CODE 51
 // This structure will be used to (dis-)connect to KOB servers
 struct command_packet_format{
     	unsigned short command; // CON / DIS
     	unsigned short channel; // Channel number
 };
-#define SIZE_COMMAND_PACKET 4
 // This structure will be used for id, rx and tx packets
-#define SIZE_ID 128
-#define SIZE_STATUS 128
 struct data_packet_format{
     	unsigned short command;
     	unsigned short length;
@@ -24,14 +28,12 @@ struct data_packet_format{
 	unsigned int a21;  
 	unsigned int a22;
 	unsigned int a23;
-    	signed int code[51];
+    	signed int code[SIZE_CODE];
     	unsigned int n;
     	char status[SIZE_STATUS];  /* This is called version in MorseKob */
     	char a4[8];
     
 };
-#define SIZE_DATA_PACKET 496
-#define SIZE_DATA_PACKET_PAYLOAD 492 // = SIZE_DATA_PACKET - SIZE_COMMAND_PACKET
 
 // Define the packets used
 #define DEFAULT_CHANNEL 103
