@@ -64,23 +64,7 @@ struct data_packet_format{
     
 };
 #define SIZE_DATA_PACKET 496
-// This structure is not used.
-/*
-struct code_packet_format{
-    	unsigned short command;
-    	unsigned short length;
-    	char id[128];
-    	char a1[4];
-    	unsigned int sequence;
-	unsigned int a21;
-	unsigned int a22;
-	unsigned int a23;
-    	signed int code[51];
-    	unsigned int n;
-    	char a3[128];
-    	char a4[8];
-};
-*/
+
 
 struct command_packet_format connect_packet;
 struct command_packet_format disconnect_packet = {DIS, 0};
