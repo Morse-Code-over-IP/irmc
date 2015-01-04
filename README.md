@@ -1,3 +1,6 @@
+irmc - Internet Relay Morse Code
+================================
+
 # What is IRMC?
 IRMC stands for Internet Relay Morse Code. It implements the [CWCom protocol](http://kob.sdf.org/morsekob/docs/cwcom.pdf) as adopted by [MorseKOB](http://kob.sdf.org/morsekob/docs/history.pdf). You can try out the software in a [browser](http://kob.sdf.org/morsekob/morsekob30/index.htm) using Java.
 
