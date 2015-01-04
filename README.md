@@ -62,6 +62,9 @@ A current list of servers if provided on the [MorseKOB Website](http://mtc-kob.d
 ## Hardware interface options
 A good description on how to build differnt interfaces (telegraph key, sounder or both) is given on the [MorseKOB Website](http://kob.sdf.org/morsekob/interface.htm). Landline telegraphs use "closed circuits" for communications; if you have built one at home, you may also use the [loop interface](http://kob.sdf.org/morsekob/docs/loopinterface.pdf).
 
+# Changelog
+* v0.2 [zip](https://github.com/8cH9azbsFifZ/irmc/archive/v0.2.zip) - ported to debian wheezy and osx yosemite, DG6FL
+* v0.1 [zip](https://github.com/8cH9azbsFifZ/irmc/archive/v0.1.zip) - original version, VE7FEB
 
 # References
 
