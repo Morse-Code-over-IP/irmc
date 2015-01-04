@@ -34,17 +34,20 @@
 
 #define MAXDATASIZE 1024 // max number of bytes we can get at once 
 
-#define DIS 0x0002
-#define DAT 0x0003
+#define DIS 0x0002 // for command packet
+#define DAT 0x0003 // for command packet
 #define CON 0x0004
 #define ACK 0x0005
 
 #define DEBUG 0
 
+// This structure will be used to (dis-)connect to KOB servers
 struct command_packet_format{
-    	unsigned short command;
-    	unsigned short channel;
+    	unsigned short command; // CON / DIS
+    	unsigned short channel; // Channel number
 };
+#define SIZE_COMMAND_PACKET 4
+// This structure will be used for id, rx and tx packets
 struct data_packet_format{
     	unsigned short command;
     	unsigned short length;
@@ -60,6 +63,9 @@ struct data_packet_format{
     	char a4[8];
     
 };
+#define SIZE_DATA_PACKET 496
+// This structure is not used.
+/*
 struct code_packet_format{
     	unsigned short command;
     	unsigned short length;
@@ -74,13 +80,14 @@ struct code_packet_format{
     	char a3[128];
     	char a4[8];
 };
+*/
 
 struct command_packet_format connect_packet;
 struct command_packet_format disconnect_packet = {DIS, 0};
 struct data_packet_format id_packet;
 struct data_packet_format rx_data_packet;
 struct data_packet_format tx_data_packet;
-int serial_status = 0, fd_speaker, fd_serial, fd_socket, numbytes;
+int serial_status = 0, fd_serial, fd_socket, numbytes;
 int tx_sequence = 0, rx_sequence;
 
 double tx_timeout = 0;
@@ -159,17 +166,16 @@ identifyclient(void)
 {
 	tx_sequence++;
 	id_packet.sequence = tx_sequence;
-	send(fd_socket, &connect_packet, sizeof(connect_packet), 0);
-	send(fd_socket, &id_packet, 496, 0);
+	send(fd_socket, &connect_packet, SIZE_COMMAND_PACKET, 0);
+	send(fd_socket, &id_packet, SIZE_DATA_PACKET, 0);
 }
 
 void
 inthandler(int sig)
 {
 	signal(sig, SIG_IGN);
-	send(fd_socket, &disconnect_packet, sizeof(disconnect_packet), 0);	
+	send(fd_socket, &disconnect_packet, SIZE_COMMAND_PACKET, 0);	
 	close(fd_socket);
-	close(fd_speaker);
 	close(fd_serial);
 	exit(1);
 }
@@ -226,7 +232,7 @@ commandmode(void)
 		tx_data_packet.code[0] = -1;
 		tx_data_packet.code[1] = 1;
 		tx_data_packet.n = 2;
-		for(i = 0; i < 5; i++) send(fd_socket, &tx_data_packet, 496, 0);
+		for(i = 0; i < 5; i++) send(fd_socket, &tx_data_packet, SIZE_DATA_PACKET, 0);
 		tx_data_packet.n = 0;
 		return 0;
 	}
@@ -237,7 +243,7 @@ commandmode(void)
 		tx_data_packet.code[0] = -1;
 		tx_data_packet.code[1] = 2;
 		tx_data_packet.n = 2;
-		for(i = 0; i < 5; i++) send(fd_socket, &tx_data_packet, 496, 0);
+		for(i = 0; i < 5; i++) send(fd_socket, &tx_data_packet, SIZE_DATA_PACKET, 0);
 		tx_data_packet.n = 0;
 		return 0;
 	}
@@ -397,8 +403,8 @@ int main(int argc, char *argv[])
   		if(tx_timer == 0) 
 			if((numbytes = recv(fd_socket, buf, MAXDATASIZE-1, 0)) == -1)
 				usleep(250);
-		if(numbytes == 496 && tx_timer == 0){
-			memcpy(&rx_data_packet, buf, 496);
+		if(numbytes == SIZE_DATA_PACKET && tx_timer == 0){
+			memcpy(&rx_data_packet, buf, SIZE_DATA_PACKET);
 		#if DEBUG  
 			printf("length: %i\n", rx_data_packet.length);
 			printf("id: %s\n", rx_data_packet.id);
@@ -451,7 +457,7 @@ beep(1000.0, length/1000.);
 		if(tx_data_packet.n > 1 ){
 			tx_sequence++;
 			tx_data_packet.sequence = tx_sequence;
-			for(i = 0; i < 5; i++) send(fd_socket, &tx_data_packet, 496, 0);
+			for(i = 0; i < 5; i++) send(fd_socket, &tx_data_packet, SIZE_DATA_PACKET, 0);
 		#if DEBUG		
 			printf("irmc: sent data packet.\n");
 		#endif
@@ -482,7 +488,7 @@ beep(1000.0, length/1000.);
 		}
 	} /* End of mainloop */
 
-	send(fd_socket, &disconnect_packet, sizeof(disconnect_packet), 0);	
+	send(fd_socket, &disconnect_packet, SIZE_COMMAND_PACKET, 0);	
 	close(fd_socket);
 	close(fd_serial);
 
