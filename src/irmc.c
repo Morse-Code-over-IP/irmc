@@ -31,10 +31,7 @@
 #include <mach/mach.h>
 #endif
  
-<<<<<<< HEAD:irmc.c
-=======
 #define DEBUG 0
->>>>>>> master:src/irmc.c
 
 #define MAXDATASIZE 1024 // max number of bytes we can get at once 
 
