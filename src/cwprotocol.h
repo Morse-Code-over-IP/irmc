@@ -11,10 +11,12 @@ struct command_packet_format{
 };
 #define SIZE_COMMAND_PACKET 4
 // This structure will be used for id, rx and tx packets
+#define SIZE_ID 128
+#define SIZE_STATUS 128
 struct data_packet_format{
     	unsigned short command;
     	unsigned short length;
-    	char id[128];
+    	char id[SIZE_ID];
     	char a1[4];
     	unsigned int sequence;
 	unsigned int a21;  
@@ -22,18 +24,16 @@ struct data_packet_format{
 	unsigned int a23;
     	signed int code[51];
     	unsigned int n;
-    	char status[128];  /* This is called version in MorseKob */
+    	char status[SIZE_STATUS];  /* This is called version in MorseKob */
     	char a4[8];
     
 };
 #define SIZE_DATA_PACKET 496
+#define SIZE_DATA_PACKET_PAYLOAD 492 // = SIZE_DATA_PACKET - SIZE_COMMAND_PACKET
 
 // Define the packets used
 #define DEFAULT_CHANNEL 103
-struct command_packet_format connect_packet = {CON, DEFAULT_CHANNEL}; 
-struct command_packet_format disconnect_packet = {DIS, 0};
-struct data_packet_format id_packet;
-struct data_packet_format rx_data_packet;
-struct data_packet_format tx_data_packet;
 
 
+int prepare_id (struct data_packet_format *id_packet, char *id);
+int prepare_tx (struct data_packet_format *tx_packet, char *id);

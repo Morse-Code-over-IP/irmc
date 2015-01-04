@@ -36,7 +36,11 @@
 #define MAXDATASIZE 1024 // max number of bytes we can get at once 
 
 #include "cwprotocol.h"
-
+struct command_packet_format connect_packet = {CON, DEFAULT_CHANNEL}; 
+struct command_packet_format disconnect_packet = {DIS, 0};
+struct data_packet_format id_packet;
+struct data_packet_format rx_data_packet;
+struct data_packet_format tx_data_packet;
 
 int serial_status = 0, fd_serial, fd_socket, numbytes;
 int tx_sequence = 0, rx_sequence;
@@ -263,7 +267,7 @@ int main(int argc, char *argv[])
 	char hostname[64];
 	char port[16];
 	int channel;
-	char id[128];
+	char id[SIZE_ID];
 	char serialport[64];
 
 	if (argc < 4) {
@@ -274,30 +278,13 @@ int main(int argc, char *argv[])
 	snprintf(hostname, 64, argv[1], "%s");
 	snprintf(port, 16, argv[2], "%s");
 	channel = atoi(argv[3]);
-	if(argc > 4) snprintf(id, 128, argv[4], "%s");
-	else snprintf(id, 128, "irmc"); 
+	if(argc > 4) snprintf(id, SIZE_ID, argv[4], "%s");
+	else snprintf(id, SIZE_ID, "irmc"); 
 	if(argc > 5) snprintf(serialport, 64, argv[5], "%s");
 
-	id_packet.command = DAT;
-	id_packet.length = 492;
-	snprintf(id_packet.id, 128, id, "%s");
-	id_packet.sequence = 0;
-	id_packet.n = 0;
-	snprintf(id_packet.status, 128, "irmc v0.02");
-	id_packet.a21 = 1;     /* These magic numbers was provided by Les Kerr */
-	id_packet.a22 = 755;
-	id_packet.a23 = 65535;
+	prepare_id (&id_packet, id);
+	prepare_tx (&tx_data_packet, id);
 	
-	tx_data_packet.command = DAT;
-	tx_data_packet.length = 492;
-	snprintf(tx_data_packet.id, 128,  id, "%s");
-	tx_data_packet.sequence = 0;
-	tx_data_packet.n = 0;
-	for(i = 1; i < 51; i++)tx_data_packet.code[i] = 0;
-	tx_data_packet.a21 = 0; /* These magic numbers was provided by Les Kerr */
-	tx_data_packet.a22 = 755;
-	tx_data_packet.a23 = 16777215;
-	snprintf(tx_data_packet.status, 128, "?");
 	
 	connect_packet.command = CON;
 	connect_packet.channel = channel; 

@@ -1,4 +1,4 @@
-SRC = irmc.c
+SRC = irmc.c cwprotocol.c
 OBJ = ${SRC:.c=.o}
 LDFLAGS = -L/usr/local/lib -L/opt/local/lib  -lm -lmorse
 CFLAGS = -I/usr/local/include -I/opt/local/include -Wall 
