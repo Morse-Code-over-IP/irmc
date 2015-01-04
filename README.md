@@ -89,7 +89,7 @@ Copied on 20150103 from http://fernski.blogspot.de/2013/03/internet-relay-morsec
 
 ## Resources
 * CWCom, John Samin (VK1EME): http://www.mrx.com.au/d_cwcom.htm
-* Morse KOB, Less Kerr: https://sites.google.com/site/morsekob/ and http://kob.sdf.org/morsekob/
+* Morse KOB, Les Kerr: https://sites.google.com/site/morsekob/ and http://kob.sdf.org/morsekob/
 * Relay server for CW communicator and morse KOB: http://morsecode.dc3.com:7890 
 * Sources for the Relay Server: http://sourceforge.net/projects/morse-rss-news/
 * MorseKOB for AT Mega, Fernan Bolando (VE4FEB): http://fernski.blogspot.de/2013/05/sending-morsecode-via-atmega.html
