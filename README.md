@@ -38,12 +38,12 @@ LD_LIBRARY_PATH=/usr/local/lib ./irmc mtc-kob.dyndns.org 7890 33 123
 ## OSX (Yosemite)
 Compilation with make :)
 
-For the USB serial devices you need a PL2303 driver (i.e. PL2303_Serial-USB_on_OSX_Lion.pkg).
+For the USB serial devices you need a PL2303 driver (i.e. [PL2303_Serial-USB_on_OSX_Lion.pkg](http://changux.co/osx-installer-to-pl2303-serial-usb-on-osx-lio/)).
 
 ## Testing with MorseKOB 3.0 (Java)
 This [software](http://kob.sdf.org/morsekob/morsekob30/MorseKOB.jar) will run on
 Linux, Windows and OSX. With the [RXTX software](http://morsekob.org/morsekob30/help.htm)
-for Java (i.e. librxtxSerial.jnilib on OSX) it is even possible to connect to external hardware. 
+for Java (i.e. [librxtxSerial.jnilib](http://blog.brianhemeryck.me/installing-rxtx-on-mac-os-mountain-lion/) on OSX) it is even possible to connect to external hardware. 
 NB: before you transmit make sure you uncheck the "circuit closer".
 
 
