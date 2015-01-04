@@ -8,7 +8,7 @@ int prepare_id (struct data_packet_format *id_packet, char *id)
 	snprintf(id_packet->id, SIZE_ID, id, "%s");
 	id_packet->sequence = 0;
 	id_packet->n = 0;
-	snprintf(id_packet->status, SIZE_ID, "irmc v0.02");
+	snprintf(id_packet->status, SIZE_ID, INTERFACE_VERSION);
 	id_packet->a21 = 1;     /* These magic numbers was provided by Les Kerr */
 	id_packet->a22 = 755;
 	id_packet->a23 = 65535;

@@ -284,11 +284,7 @@ int main(int argc, char *argv[])
 
 	prepare_id (&id_packet, id);
 	prepare_tx (&tx_data_packet, id);
-	
-	
-	connect_packet.command = CON;
 	connect_packet.channel = channel; 
-		
 	
 	signal(SIGINT, inthandler);
 	
@@ -373,19 +369,19 @@ int main(int argc, char *argv[])
 						if(audio_status == 1)
 						{ 
 
-int length = rx_data_packet.code[i];
-if(length == 0 || abs(length) > 2000) {
-}
-else
-{
-if(length < 0) {
-beep(0.0, abs(length)/1000.);
-}
-else
-{
-beep(1000.0, length/1000.);
-}
-}
+							int length = rx_data_packet.code[i];
+							if(length == 0 || abs(length) > 2000) {
+							}
+							else
+							{
+								if(length < 0) {
+									beep(0.0, abs(length)/1000.);
+								}
+								else
+								{
+									beep(1000.0, length/1000.);
+								}
+							}
 						}
 						break;
 					}
