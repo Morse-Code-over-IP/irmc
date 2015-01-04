@@ -145,6 +145,7 @@ void *get_in_addr(struct sockaddr *sa)
 	return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
 
+// connect to server and send my id.
 void
 identifyclient(void)
 {
@@ -154,6 +155,7 @@ identifyclient(void)
 	send(fd_socket, &id_packet, SIZE_DATA_PACKET, 0);
 }
 
+// disconnect from the server
 void
 inthandler(int sig)
 {
