@@ -1,28 +1,5 @@
-<<<<<<< HEAD
-How to build on Debian
-apt-get install -y alsa-oss oss-compat build-essential autoconf libao-dev libtool
-wget https://github.com/8cH9azbsFifZ/morse/archive/v0.1.tar.gz
-tar xzf v0.1.tar.gz
-cd morse-0.1
-libtoolize
-./autogen.sh
-./configure  --with-portaudio
-make
-sudo make install
-
-
-How to build on OSX:
-TBD: Driver: serial - 2usb!
-
-TBD: OSX - howto install dependencies
-https://github.com/8cH9azbsFifZ/morse/archive/v0.1.tar.gz
-
-
-How to use:
-=======
 irmc - Internet Relay Morse Code
 ================================
->>>>>>> master
 
 # What is IRMC?
 IRMC stands for Internet Relay Morse Code. It implements the [CWCom protocol](http://kob.sdf.org/morsekob/docs/cwcom.pdf) as adopted by [MorseKOB](http://kob.sdf.org/morsekob/docs/history.pdf). You can try out the software in a [browser](http://kob.sdf.org/morsekob/morsekob30/index.htm) using Java.
@@ -31,12 +8,6 @@ IRMC stands for Internet Relay Morse Code. It implements the [CWCom protocol](ht
 Why not? A number of different approaches for CW over IP exist. An early implementation has been the CWCom protocol, 
 which has been the basis for Morse KOB, a ready-to-use software. Both chat programs have been written for CW exclusively and are compatible. An alternative implementation in C exists as well as a port to the ATMEL AVR Microcontroller. 
 
-<<<<<<< HEAD
-=== Original post ===
-I have been using cwcom to practice sending morsecode, unfortunately my main computer at home is running openbsd and it has gotten harder to gain access to a reliable MS Windows machine. So I wrote my own client that works on openbsd. 
-This is written in C and although not tested it should compile under other OS. If any one wants to try it and send me feedback. you can download version 0.01 here http://fernan.bitbucket.org/irmc.tgz
-Les Kerr of https://home.comcast.net/~morsekob/ has been very patient in answering my questions regarding the cwcom protocol and setting up a test server during debugging.
-=======
 Besides a variety of other approaches exist, for example an IRC plugin ([CWirc](http://myspace.voo.be/pcoupard/cwirc/)), a [JavaScript implementation](http://morsecode.me), a [bandwidth-eating UDP implementation](http://hans.liss.pp.se/node/343), a [chat for iOS](http://pignology.net/cwwithme.html) or a modulated CW over IP using Mumble ([iCW](https://sites.google.com/site/icwoip/)).
 
 
@@ -52,7 +23,6 @@ libtoolize
 make
 sudo make install
 ```
->>>>>>> master
 
 ## Debian (Wheezy)
 Some dependencies have to be installed:
