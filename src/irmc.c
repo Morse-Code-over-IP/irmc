@@ -284,7 +284,7 @@ int main(int argc, char *argv[])
 
 	prepare_id (&id_packet, id);
 	prepare_tx (&tx_data_packet, id);
-	connect_packet.channel = channel; 
+	connect_packet.channel = channel;
 	
 	signal(SIGINT, inthandler);
 	

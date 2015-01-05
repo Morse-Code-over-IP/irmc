@@ -46,6 +46,11 @@ Linux, Windows and OSX. With the [RXTX software](http://morsekob.org/morsekob30/
 for Java (i.e. [librxtxSerial.jnilib](http://blog.brianhemeryck.me/installing-rxtx-on-mac-os-mountain-lion/) on OSX) it is even possible to connect to external hardware. 
 NB: before you transmit make sure you uncheck the "circuit closer".
 
+Or you may want to use tcpdump, i.e.:
+```
+sudo tcpdump -i all -vvvv "host faeroes.sdf.org"
+```
+
 
 # How to use:
 
