@@ -13,11 +13,13 @@
 #define SIZE_ID 128
 #define SIZE_STATUS 128
 #define SIZE_CODE 51
+
 // This structure will be used to (dis-)connect to KOB servers
 struct command_packet_format{
     	unsigned short command; // CON / DIS
     	unsigned short channel; // Channel number
 };
+
 // This structure will be used for id, rx and tx packets
 struct data_packet_format{
     	unsigned short command;
