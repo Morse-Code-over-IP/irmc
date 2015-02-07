@@ -2,14 +2,24 @@ irmc - Internet Relay Morse Code
 ================================
 
 # What is IRMC?
-IRMC stands for Internet Relay Morse Code. It implements the [CWCom protocol](http://kob.sdf.org/morsekob/docs/cwcom.pdf) as adopted by [MorseKOB](http://kob.sdf.org/morsekob/docs/history.pdf). You can try out the software in a [browser](http://kob.sdf.org/morsekob/morsekob30/index.htm) using Java.
+IRMC stands for Internet Relay Morse Code. 
+It implements the [CWCom protocol](http://kob.sdf.org/morsekob/docs/cwcom.pdf) 
+as adopted by [MorseKOB](http://kob.sdf.org/morsekob/docs/history.pdf). 
+You can try out the software in a [browser](http://kob.sdf.org/morsekob/morsekob30/index.htm) using Java.
 
 
 ## Why morse code over IP?
-Why not? A number of different approaches for CW over IP exist. An early implementation has been the CWCom protocol, 
-which has been the basis for Morse KOB, a ready-to-use software. Both chat programs have been written for CW exclusively and are compatible. An alternative implementation in C exists as well as a port to the ATMEL AVR Microcontroller. 
+Why not? A number of different approaches for CW over IP exist. 
+An early implementation has been the CWCom protocol, 
+which has been the basis for Morse KOB, a ready-to-use software. 
+Both chat programs have been written for CW exclusively and are compatible. An alternative implementation in C exists as well as a port to the ATMEL AVR Microcontroller. 
 
-Besides a variety of other approaches exist, for example an IRC plugin ([CWirc](http://myspace.voo.be/pcoupard/cwirc/)), a [JavaScript implementation](http://morsecode.me), a [bandwidth-eating UDP implementation](http://hans.liss.pp.se/node/343), a [chat for iOS](http://pignology.net/cwwithme.html) or a modulated CW over IP using Mumble ([iCW](https://sites.google.com/site/icwoip/)).
+Besides a variety of other approaches exist, for example an IRC 
+plugin ([CWirc](http://myspace.voo.be/pcoupard/cwirc/)), 
+a [JavaScript implementation](http://morsecode.me), 
+a [bandwidth-eating UDP implementation](http://hans.liss.pp.se/node/343), 
+a [chat for iOS](http://pignology.net/cwwithme.html) 
+or a modulated CW over IP using Mumble ([iCW](https://sites.google.com/site/icwoip/)).
 
 
 # How to build?
@@ -39,7 +49,8 @@ LD_LIBRARY_PATH=/usr/local/lib ./irmc mtc-kob.dyndns.org 7890 33 123
 ## OSX (Yosemite)
 Compilation with make :)
 
-For the USB serial devices you need a PL2303 driver (i.e. [PL2303_Serial-USB_on_OSX_Lion.pkg](http://changux.co/osx-installer-to-pl2303-serial-usb-on-osx-lio/)).
+For the USB serial devices you need a PL2303 driver 
+(i.e. [PL2303_Serial-USB_on_OSX_Lion.pkg](http://changux.co/osx-installer-to-pl2303-serial-usb-on-osx-lio/)).
 
 ## Testing with MorseKOB 3.0 (Java)
 This [software](http://kob.sdf.org/morsekob/morsekob30/MorseKOB.jar) will run on
