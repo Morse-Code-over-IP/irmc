@@ -21,9 +21,8 @@ irmc:   ${OBJ}
 	@echo CC -o $@
 	@${CC} -o $@ ${OBJ} ${LDFLAGS}
 
-hex: 	${OBJ}
-	@echo avr-gcc -o $@
-	avr-gcc -o $@ ${OBJ} ${LDFLAGS}
+java:
+	java -jar test/MorseKOB.jar 
 
 clean:
 	@echo cleaning
