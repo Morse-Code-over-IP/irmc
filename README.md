@@ -1,15 +1,10 @@
 irmc - Internet Relay Morse Code
 ================================
 
-# What is IRMC?
-IRMC stands for Internet Relay Morse Code. It implements the [CWCom protocol](http://kob.sdf.org/morsekob/docs/cwcom.pdf) as adopted by [MorseKOB](http://kob.sdf.org/morsekob/docs/history.pdf). You can try out the software in a [browser](http://kob.sdf.org/morsekob/morsekob30/index.htm) using Java.
-
-## Why morse code over IP?
-Why not? A number of different approaches for CW over IP exist. An early implementation has been the CWCom protocol, 
-which has been the basis for Morse KOB, a ready-to-use software. Both chat programs have been written for CW exclusively and are compatible. An alternative implementation in C exists as well as a port to the ATMEL AVR Microcontroller. 
-
-Besides a variety of other approaches exist, for example an IRC plugin ([CWirc](http://myspace.voo.be/pcoupard/cwirc/)), a [JavaScript implementation](http://morsecode.me), a [bandwidth-eating UDP implementation](http://hans.liss.pp.se/node/343), a [chat for iOS](http://pignology.net/cwwithme.html) or a modulated CW over IP using Mumble ([iCW](https://sites.google.com/site/icwoip/)).
-
+IRMC stands for Internet Relay Morse Code and is an implementation of [MOIP](https://github.com/8cH9azbsFifZ/moip).
+It implements the [CWCom protocol](http://kob.sdf.org/morsekob/docs/cwcom.pdf) 
+as adopted by [MorseKOB](http://kob.sdf.org/morsekob/docs/history.pdf). 
+You can try out the software in a [browser](http://kob.sdf.org/morsekob/morsekob30/index.htm) using Java.
 
 # How to build?
 ## Install dependency: morse keyer library
@@ -38,13 +33,19 @@ LD_LIBRARY_PATH=/usr/local/lib ./irmc mtc-kob.dyndns.org 7890 33 123
 ## OSX (Yosemite)
 Compilation with make :)
 
-For the USB serial devices you need a PL2303 driver (i.e. [PL2303_Serial-USB_on_OSX_Lion.pkg](http://changux.co/osx-installer-to-pl2303-serial-usb-on-osx-lio/)).
+For the USB serial devices you need a PL2303 driver 
+(i.e. [PL2303_Serial-USB_on_OSX_Lion.pkg](http://changux.co/osx-installer-to-pl2303-serial-usb-on-osx-lio/)).
 
 ## Testing with MorseKOB 3.0 (Java)
 This [software](http://kob.sdf.org/morsekob/morsekob30/MorseKOB.jar) will run on
 Linux, Windows and OSX. With the [RXTX software](http://morsekob.org/morsekob30/help.htm)
 for Java (i.e. [librxtxSerial.jnilib](http://blog.brianhemeryck.me/installing-rxtx-on-mac-os-mountain-lion/) on OSX) it is even possible to connect to external hardware. 
 NB: before you transmit make sure you uncheck the "circuit closer".
+
+Or you may want to use tcpdump, i.e.:
+```
+sudo tcpdump -i all -vvvv "host faeroes.sdf.org"
+```
 
 
 # How to use:
@@ -54,13 +55,17 @@ The usage is: `irmc [hostname] [port] [channel] [id] [serialport`
 For example:
 `./irmc mtc-kob.dyndns.org 7890 103 MyID /dev/tty.usbserial´
 
-## Morse KOB Servers
-* faeroes.sdf.org 7890
-* mtc-kob.dyndns.org 7890
-A current list of servers if provided on the [MorseKOB Website](http://mtc-kob.dyndns.org).
-
+                                                      
 ## Hardware interface options
-A good description on how to build differnt interfaces (telegraph key, sounder or both) is given on the [MorseKOB Website](http://kob.sdf.org/morsekob/interface.htm). Landline telegraphs use "closed circuits" for communications; if you have built one at home, you may also use the [loop interface](http://kob.sdf.org/morsekob/docs/loopinterface.pdf).
+A good description on how to build differnt interfaces (telegraph key, sounder or both) 
+is given on the [MorseKOB Website](http://kob.sdf.org/morsekob/interface.htm). 
+Landline telegraphs use "closed circuits" for communications; if you have built one at home, 
+you may also use the [loop interface](http://kob.sdf.org/morsekob/docs/loopinterface.pdf).
+
+Connection of a morse key:
+Serial PIN: 4 & 6
+[layout of pins](http://techpubs.sgi.com/library/dynaweb_docs/0650/SGI_Admin/books/MUX_IG/sgi_html/figures/4-2.serial.port.con.gif)
+Connecting the palm radio: keep an eye on the grounding :)
 
 # Changelog
 * v0.2 [zip](https://github.com/8cH9azbsFifZ/irmc/archive/v0.2.zip) - ported to debian wheezy and osx yosemite, DG6FL
@@ -93,9 +98,8 @@ Copied on 20150103 from http://fernski.blogspot.de/2013/03/internet-relay-morsec
 > John Samin - http://www.mrx.com.au/
 
 
-## Resources
-* CWCom, John Samin (VK1EME): http://www.mrx.com.au/d_cwcom.htm
-* Morse KOB, Les Kerr: https://sites.google.com/site/morsekob/ and http://kob.sdf.org/morsekob/
-* Relay server for CW communicator and morse KOB: http://morsecode.dc3.com:7890 
-* Sources for the Relay Server: http://sourceforge.net/projects/morse-rss-news/
-* MorseKOB for AT Mega, Fernan Bolando (VE4FEB): http://fernski.blogspot.de/2013/05/sending-morsecode-via-atmega.html
+Code Quality
+============
+This is experimental code.
+
+
