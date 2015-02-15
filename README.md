@@ -73,6 +73,7 @@ For example:
 
 ## Morse KOB Servers
 * faeroes.sdf.org 7890
+* morsecode.dyndns.org 7890
 * mtc-kob.dyndns.org 7890
 A current list of servers if provided on the [MorseKOB Website](http://mtc-kob.dyndns.org).
 
@@ -128,3 +129,10 @@ Copied on 20150103 from http://fernski.blogspot.de/2013/03/internet-relay-morsec
 
 
 A number of different approaches for CW over IP exist. An early implementation has been the CWCom protocol<ref>CWCom, John Samin (VK1EME): http://www.mrx.com.au/d_cwcom.htm</ref>, which has been the basis for Morse KOB<ref>Morse KOB, Less Kerr: http://kob.sdf.org/morsekob/</ref><ref>Morse KOB 4.0, Less Kerr: https://sites.google.com/site/morsekob/</ref>, a ready-to-use software. Both chat programs have been written for CW exclusively and are compatible<ref>Relay server for CW communicator and morse KOB: http://morsecode.dc3.com:7890</ref><ref>Sources for the Relay Server: http://sourceforge.net/projects/morse-rss-news/</ref>. An alternative implementation in C exists<ref>IRMC (Morse KOB): http://fernski.blogspot.de/2013/03/internet-relay-morsecode.html</ref> as well as a port to the ATMEL AVR Microcontroller<ref>MorseKOB for AT Mega: http://fernski.blogspot.de/2013/05/sending-morsecode-via-atmega.html</ref>. Besides a variety of other approaches exist, for example an IRC plugin<ref>CWirc, Pierre-Philippe Coupard: http://myspace.voo.be/pcoupard/cwirc/</ref>, a JavaScript implementation<ref>Burak Kanber: http://morsecode.me</ref>, a bandwidth-eating UDP implementation<ref>Morse over IP, Hans Liss: http://hans.liss.pp.se/node/343</ref>, a chat for iOS<ref>CW with me (iOS), Nick Garner: http://pignology.net/cwwithme.html</ref> or a modulated CW over IP using Mumble<ref>iCW: https://sites.google.com/site/icwoip/</ref>.
+
+
+Code Quality
+============
+This is experimental code.
+
+
