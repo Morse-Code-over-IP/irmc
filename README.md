@@ -64,6 +64,16 @@ Serial PIN: 4 & 6
 [layout of pins](http://techpubs.sgi.com/library/dynaweb_docs/0650/SGI_Admin/books/MUX_IG/sgi_html/figures/4-2.serial.port.con.gif)
 Connecting the palm radio: keep an eye on the grounding :)
 
+
+  http://kob.sdf.org/morsekob/interface.htm#portpins
+  RS232     DB9     Function    
+  DTR       4       Manual Key / paddle common
+  DSR       6       Manual key / dot paddle
+  CTS       8       Dash paddle
+  RTS       7       Sounder output
+  SG        5       Sounder ground
+
+
 # Changelog
 * v0.2 [zip](https://github.com/8cH9azbsFifZ/irmc/archive/v0.2.zip) - ported to debian wheezy and osx yosemite, DG6FL
 * v0.1 [zip](https://github.com/8cH9azbsFifZ/irmc/archive/v0.1.zip) - original version, VE7FEB
