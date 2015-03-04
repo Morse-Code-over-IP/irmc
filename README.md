@@ -78,17 +78,6 @@ Connecting the palm radio: keep an eye on the grounding :)
 * v0.2 [zip](https://github.com/8cH9azbsFifZ/irmc/archive/v0.2.zip) - ported to debian wheezy and osx yosemite, DG6FL
 * v0.1 [zip](https://github.com/8cH9azbsFifZ/irmc/archive/v0.1.zip) - original version, VE7FEB
 
-# References
-Original [post](http://fernski.blogspot.de/2013/03/internet-relay-morsecode.html) by Fernan Bolando (VE4FEB)
-
-> There are few difference between this and the official cwcom client
-> 1. It is a command line tool 
-> 2. It does not send the characters of the message to the receivers screen.
-> 3. It does not translate CW for you. You can try fldigi if you just want see the transmission.
-> 4. Tone pitch is currently hard coded to 650Hz
-> 5. It does not have a way to show you who is listening.  
-
-
 Code Quality
 ============
 This is experimental code.
