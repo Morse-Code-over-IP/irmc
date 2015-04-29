@@ -6,6 +6,9 @@ It implements the [CWCom protocol](http://kob.sdf.org/morsekob/docs/cwcom.pdf)
 as adopted by [MorseKOB](http://kob.sdf.org/morsekob/docs/history.pdf). 
 You can try out the software in a [browser](http://kob.sdf.org/morsekob/morsekob30/index.htm) using Java.
 
+![Screenshot on OSX](/doc/screenshot.png?raw=true "Screenshot")
+
+
 # How to build?
 ## Install dependency: morse keyer library
 ```
@@ -36,11 +39,8 @@ Compilation with make :)
 For the USB serial devices you need a PL2303 driver 
 (i.e. [PL2303_Serial-USB_on_OSX_Lion.pkg](http://changux.co/osx-installer-to-pl2303-serial-usb-on-osx-lio/)).
 
-## Testing with MorseKOB 3.0 (Java)
-This [software](http://kob.sdf.org/morsekob/morsekob30/MorseKOB.jar) will run on
-Linux, Windows and OSX. With the [RXTX software](http://morsekob.org/morsekob30/help.htm)
-for Java (i.e. [librxtxSerial.jnilib](http://blog.brianhemeryck.me/installing-rxtx-on-mac-os-mountain-lion/) on OSX) it is even possible to connect to external hardware. 
-NB: before you transmit make sure you uncheck the "circuit closer".
+## Testing
+./irmc morsecode.dyndns.org 7890 2348 test
 
 Or you may want to use tcpdump, i.e.:
 ```
@@ -67,20 +67,19 @@ Serial PIN: 4 & 6
 [layout of pins](http://techpubs.sgi.com/library/dynaweb_docs/0650/SGI_Admin/books/MUX_IG/sgi_html/figures/4-2.serial.port.con.gif)
 Connecting the palm radio: keep an eye on the grounding :)
 
+
+  http://kob.sdf.org/morsekob/interface.htm#portpins
+  RS232     DB9     Function    
+  DTR       4       Manual Key / paddle common
+  DSR       6       Manual key / dot paddle
+  CTS       8       Dash paddle
+  RTS       7       Sounder output
+  SG        5       Sounder ground
+
+
 # Changelog
 * v0.2 [zip](https://github.com/8cH9azbsFifZ/irmc/archive/v0.2.zip) - ported to debian wheezy and osx yosemite, DG6FL
 * v0.1 [zip](https://github.com/8cH9azbsFifZ/irmc/archive/v0.1.zip) - original version, VE7FEB
-
-# References
-Original [post](http://fernski.blogspot.de/2013/03/internet-relay-morsecode.html) by Fernan Bolando (VE4FEB)
-
-> There are few difference between this and the official cwcom client
-> 1. It is a command line tool 
-> 2. It does not send the characters of the message to the receivers screen.
-> 3. It does not translate CW for you. You can try fldigi if you just want see the transmission.
-> 4. Tone pitch is currently hard coded to 650Hz
-> 5. It does not have a way to show you who is listening.  
-
 
 Code Quality
 ============
