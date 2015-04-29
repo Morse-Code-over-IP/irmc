@@ -6,6 +6,9 @@ It implements the [CWCom protocol](http://kob.sdf.org/morsekob/docs/cwcom.pdf)
 as adopted by [MorseKOB](http://kob.sdf.org/morsekob/docs/history.pdf). 
 You can try out the software in a [browser](http://kob.sdf.org/morsekob/morsekob30/index.htm) using Java.
 
+![Screenshot on OSX](/doc/screenshot.png?raw=true "Screenshot")
+
+
 # How to build?
 ## Install dependency: morse keyer library
 ```
