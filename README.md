@@ -57,7 +57,7 @@ For example:
 
                                                       
 ## Hardware interface options
-A good description on how to build differnt interfaces (telegraph key, sounder or both) 
+A good description on how to build different interfaces (telegraph key, sounder or both) 
 is given on the [MorseKOB Website](http://kob.sdf.org/morsekob/interface.htm). 
 Landline telegraphs use "closed circuits" for communications; if you have built one at home, 
 you may also use the [loop interface](http://kob.sdf.org/morsekob/docs/loopinterface.pdf).
