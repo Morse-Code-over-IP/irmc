@@ -49,9 +49,7 @@ sudo tcpdump -i all -vvvv "host faeroes.sdf.org"
 
 
 # How to use:
-
 The usage is: `irmc [hostname] [port] [channel] [id] [serialport`
-
 For example:
 `./irmc mtc-kob.dyndns.org 7890 103 MyID /dev/tty.usbserial´
 
@@ -84,5 +82,3 @@ Connecting the palm radio: keep an eye on the grounding :)
 Code Quality
 ============
 This is experimental code.
-
-
