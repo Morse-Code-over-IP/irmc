@@ -12,7 +12,11 @@
 #include <sys/ioctl.h>
 #include <math.h>
 #include <fcntl.h>
-#include <morse/beep.h>
+#ifdef BEEP_MORSE
+	#include <morse/beep.h>
+#else
+	#include "portaudio.h"
+#endif
 #ifdef __MACH__
 #else
     #include <linux/ioctl.h>
@@ -30,6 +34,10 @@
     #include <mach/mach.h>
 #endif
  
+#ifndef BEEP_MORSE
+	#include "beep.h"
+#endif
+
 #define DEBUG 0
 
 #define MAXDATASIZE 1024 // max number of bytes we can get at once 
@@ -406,13 +414,10 @@ int main(int argc, char *argv[])
 							else
 							{
 								if(length < 0) {
-                                    printf("beep no");
 									beep(0.0, abs(length)/1000.);
 								}
 								else
 								{
-                                    printf("beep yes");
-
 									beep(1000.0, length/1000.);
 								}
 							}
