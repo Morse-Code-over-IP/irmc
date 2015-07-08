@@ -9,16 +9,15 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
+#include <sys/ioctl.h>
 #include <math.h>
 #include <fcntl.h>
 #include <morse/beep.h>
 #ifdef __MACH__
-#define LIBOSS_INTERNAL
-#include <liboss/soundcard.h> //will not be used for audio any more
 #else
-#include <linux/ioctl.h>
-#include <asm-generic/ioctl.h>
-#include <asm-generic/termios.h>
+    #include <linux/ioctl.h>
+    #include <asm-generic/ioctl.h>
+    #include <asm-generic/termios.h>
 #endif 
 #include <signal.h>
 #include <arpa/inet.h>
@@ -27,8 +26,8 @@
 #include <stdio.h>
  
 #ifdef __MACH__
-#include <mach/clock.h>
-#include <mach/mach.h>
+    #include <mach/clock.h>
+    #include <mach/mach.h>
 #endif
  
 #define DEBUG 0
@@ -77,8 +76,7 @@ void current_utc_time(struct timespec *ts) {
 }
 
 /* a better clock() in milliseconds */
-long 
-fastclock(void)
+long fastclock(void)
 {
 	struct timespec t;
 	long r;
@@ -117,8 +115,7 @@ void *get_in_addr(struct sockaddr *sa)
 }
 
 // connect to server and send my id.
-void
-identifyclient(void)
+void identifyclient(void)
 {
 	tx_sequence++;
 	id_packet.sequence = tx_sequence;
@@ -127,8 +124,7 @@ identifyclient(void)
 }
 
 // disconnect from the server
-void
-inthandler(int sig)
+void inthandler(int sig)
 {
 	signal(sig, SIG_IGN);
 	send(fd_socket, &disconnect_packet, SIZE_COMMAND_PACKET, 0);	
@@ -137,8 +133,7 @@ inthandler(int sig)
 	exit(1);
 }
 
-void
-txloop (void)
+void txloop (void)
 {
 	key_press_t1 = fastclock();
 	tx_timeout = 0;
@@ -170,8 +165,7 @@ txloop (void)
 	}
 }
 
-int
-commandmode(void)
+int commandmode(void)
 {
 	char cmd[32];
 	int i;
@@ -226,8 +220,7 @@ commandmode(void)
 }
 
 
-void
-message(int msg)
+void message(int msg)
 {       
 	switch(msg){
 	case 1:
@@ -256,7 +249,9 @@ message(int msg)
 	}
 	fflush(0);
 }
-	 
+
+
+/* Main Loop */
 int main(int argc, char *argv[])
 {
 	char buf[MAXDATASIZE];
@@ -351,7 +346,7 @@ int main(int argc, char *argv[])
 	}
     
     
-    	fcntl(fd_socket, F_SETFL, O_NONBLOCK);
+    fcntl(fd_socket, F_SETFL, O_NONBLOCK);
 	if (p == NULL) {
 		fprintf(stderr, "Failed to connect.\n");
 		return 2;
@@ -411,10 +406,13 @@ int main(int argc, char *argv[])
 							else
 							{
 								if(length < 0) {
+                                    printf("beep no");
 									beep(0.0, abs(length)/1000.);
 								}
 								else
 								{
+                                    printf("beep yes");
+
 									beep(1000.0, length/1000.);
 								}
 							}
