@@ -1,13 +1,7 @@
 irmc - Internet Relay Morse Code
 ================================
 
-IRMC stands for Internet Relay Morse Code and is an implementation of [MOIP](https://github.com/8cH9azbsFifZ/moip).
-It implements the [CWCom protocol](http://kob.sdf.org/morsekob/docs/cwcom.pdf) 
-as adopted by [MorseKOB](http://kob.sdf.org/morsekob/docs/history.pdf). 
-You can try out the software in a [browser](http://kob.sdf.org/morsekob/morsekob30/index.htm) using Java.
-
-![Screenshot on OSX](/doc/screenshot.png?raw=true "Screenshot")
-
+IRMC stands for Internet Relay Morse Code and is an implementation of [MOIP](http://8ch9azbsfifz.github.io/moip/).
 
 # How to build?
 ## Install dependency: morse keyer library
