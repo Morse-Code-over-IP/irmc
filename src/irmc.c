@@ -270,17 +270,53 @@ int main(int argc, char *argv[])
 	char id[SIZE_ID];
 	char serialport[64];
 
-	if (argc < 4) {
-	    fprintf(stderr," %i usage: irmc [hostname] [port] [channel] [id] [serialport]\n", argc);
-	    exit(1);
+	// Set default values
+	snprintf(hostname, 64, "mtc-kob.dyndns.org");
+	snprintf(port, 16, "7890");
+	channel = 103;
+	snprintf(id, SIZE_ID, "irmc-default");
+	snprintf(serialport, 64, "/dev/tty.usbserial");
+
+	// Read commandline
+	opterr = 0; 
+	int c;
+	while ((c = getopt (argc, argv, "h:p:c:i:s:")) != -1)
+	{
+		switch (c) 
+		{
+			case 'h':
+				snprintf(hostname, 64, "%s", optarg);
+				break;
+			case 'p':
+				snprintf(port, 16, "%s", optarg);
+				break;
+			case 'c':
+				channel = atoi (optarg);
+				break;
+			case 'i':
+				snprintf(id, SIZE_ID, "%s", optarg);
+				break;
+			case 's':
+				snprintf(serialport, 64, "%s", optarg);
+				break;
+			case '?':
+	    			fprintf(stderr, "irmc - Internet Relay Morse Code\n\n");
+				fprintf(stderr, "usage: irmc [arguments]\n\n");
+				fprintf(stderr, "Arguments:\n\n");
+				fprintf(stderr, "   -h [hostname]     Hostname of morsekob server. Default: %s\n", hostname);
+				fprintf(stderr, "   -p [port]         Port of morsekob server. Default: %s\n", port);
+				fprintf(stderr, "   -c [channel]      Channel. Default: %d\n", channel);
+				fprintf(stderr, "   -i [id]           My ID. Default: %s\n", id);
+				fprintf(stderr, "   -s [serialport]   Serial port device name. Default: %s\n", serialport);
+				return 1;
+			default: 
+				abort ();
+		}
 	}
 
-	snprintf(hostname, 64, argv[1], "%s");
-	snprintf(port, 16, argv[2], "%s");
-	channel = atoi(argv[3]);
-	if(argc > 4) snprintf(id, SIZE_ID, argv[4], "%s");
-	else snprintf(id, SIZE_ID, "irmc"); 
-	if(argc > 5) snprintf(serialport, 64, argv[5], "%s");
+	// Preparing connection
+	fprintf(stderr, "irmc - Internet Relay Morse Code\n\n");
+	fprintf(stderr, "Connecting to %s:%s on channel %d with ID %s.\n", hostname, port, channel, id); 
 
 	prepare_id (&id_packet, id);
 	prepare_tx (&tx_data_packet, id);
@@ -317,17 +353,17 @@ int main(int argc, char *argv[])
     
     	fcntl(fd_socket, F_SETFL, O_NONBLOCK);
 	if (p == NULL) {
-		fprintf(stderr, "irmc: failed to connect\n");
+		fprintf(stderr, "Failed to connect.\n");
 		return 2;
 	}
 
 	inet_ntop(p->ai_family, get_in_addr((struct sockaddr *)p->ai_addr),
 			s, sizeof s);
-	printf("irmc: connected to %s\n", s);
+	fprintf(stderr, "Connected to %s.\n", s);
 	beep_init();
 	fd_serial = open(serialport, O_RDWR | O_NOCTTY | O_NDELAY);
 	if(fd_serial == -1) {
-    		printf("irmc: unable to open serial port.\n");
+    		fprintf(stderr,"Unable to open serial port %s.\n", serialport);
     	}
 	freeaddrinfo(servinfo); /* all done with this structure */
 
