@@ -45,9 +45,6 @@ Serial PIN: 4 & 6
 [layout of pins](http://techpubs.sgi.com/library/dynaweb_docs/0650/SGI_Admin/books/MUX_IG/sgi_html/figures/4-2.serial.port.con.gif)
 Connecting the palm radio: keep an eye on the grounding :)
 
-| Architecture  | Name  	| License | Comment |
-| :------------ |:------------ 	| :-----  | :------ | 
-
 |  RS232    | DB9    | Function |   
 | :-------- |:-------| :------  | 
 |  DTR      | 4      | Manual Key / paddle common|
