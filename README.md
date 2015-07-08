@@ -41,9 +41,7 @@ Landline telegraphs use "closed circuits" for communications; if you have built 
 you may also use the [loop interface](http://kob.sdf.org/morsekob/docs/loopinterface.pdf).
 
 Connection of a morse key:
-Serial PIN: 4 & 6
 [layout of pins](http://techpubs.sgi.com/library/dynaweb_docs/0650/SGI_Admin/books/MUX_IG/sgi_html/figures/4-2.serial.port.con.gif)
-Connecting the palm radio: keep an eye on the grounding :)
 
 |  RS232    | DB9    | Function |   
 | :-------- |:-------| :------  | 
