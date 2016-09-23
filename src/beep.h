@@ -104,8 +104,10 @@ static void StreamFinished( void* userData )
 }
 
 /*******************************************************************/
-int main(void);
-int main(void)
+
+void beep_init(void);
+
+int beep(double freq_hz, double duration_sec)
 {
     PaStreamParameters outputParameters;
     PaStream *stream;
@@ -155,7 +157,7 @@ int main(void)
     if( err != paNoError ) goto error;
 
     printf("Play for %d seconds.\n", NUM_SECONDS );
-    Pa_Sleep( NUM_SECONDS * 1000 );
+    Pa_Sleep( duration_sec * 1000 );
 
     err = Pa_StopStream( stream );
     if( err != paNoError ) goto error;

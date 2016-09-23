@@ -12,6 +12,7 @@
 #include <sys/ioctl.h>
 #include <math.h>
 #include <fcntl.h>
+#include <pthread.h>
 #ifdef BEEP_MORSE
 	#include <morse/beep.h>
 #else
@@ -34,11 +35,11 @@
     #include <mach/mach.h>
 #endif
  
-#ifndef BEEP_MORSE
+#ifndef BEEP_MORSE // does not help!!
 	#include "beep.h"
 #endif
 
-#define DEBUG 0
+#define DEBUG 1
 
 #define MAXDATASIZE 1024 // max number of bytes we can get at once 
 
@@ -353,8 +354,7 @@ int main(int argc, char *argv[])
 		break;
 	}
     
-    
-    fcntl(fd_socket, F_SETFL, O_NONBLOCK);
+    	fcntl(fd_socket, F_SETFL, O_NONBLOCK);
 	if (p == NULL) {
 		fprintf(stderr, "Failed to connect.\n");
 		return 2;

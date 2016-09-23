@@ -1,6 +1,6 @@
 SRC = irmc.c cwprotocol.c
 OBJ = ${SRC:.c=.o}
-LDFLAGS = -L/usr/local/lib -L/opt/local/lib  -lportaudio -lm -lmorse
+LDFLAGS = -L/usr/local/lib -L/opt/local/lib  -lportaudio -lpthread -lm -lmorse
 CFLAGS = -I/usr/local/include -I/opt/local/include -Wall 
 INSTALLDIR = ${HOME}/bin
 
