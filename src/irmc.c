@@ -13,38 +13,35 @@
 #include <math.h>
 #include <fcntl.h>
 #include <pthread.h>
+#include <signal.h>
+#include <arpa/inet.h>
+#include <time.h>
+#include <sys/time.h>
+#include <stdio.h>
+
 #define BEEP_MORSE
 #ifdef BEEP_MORSE
 	#include <morse/beep.h>
 #else
 	#include "portaudio.h"
 #endif
+
 #ifdef __MACH__
+    #include <mach/clock.h>
+    #include <mach/mach.h>
 #else
     #include <linux/ioctl.h>
     #include <asm-generic/ioctl.h>
     #include <asm-generic/termios.h>
 #endif 
-#include <signal.h>
-#include <arpa/inet.h>
-#include <time.h>
-#include <sys/time.h>
-#include <stdio.h>
- 
-#ifdef __MACH__
-    #include <mach/clock.h>
-    #include <mach/mach.h>
-#endif
- 
-#ifndef BEEP_MORSE // does not help!!
-	#include "beep.h"
-#endif
 
+ 
 //#define DEBUG 1
 
 #define MAXDATASIZE 1024 // max number of bytes we can get at once 
 
 #include "cwprotocol.h"
+
 struct command_packet_format connect_packet = {CON, DEFAULT_CHANNEL}; 
 struct command_packet_format disconnect_packet = {DIS, 0};
 struct data_packet_format id_packet;
