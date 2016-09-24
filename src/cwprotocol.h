@@ -32,7 +32,7 @@ struct data_packet_format{
 	unsigned int a23;
     	signed int code[SIZE_CODE];
     	unsigned int n;
-    	char status[SIZE_STATUS];  /* This is called version in MorseKob */
+    	char status[SIZE_STATUS];  /* This is called version in MorseKob, in cwcom this transmits the sent character?! */
     	char a4[8];
     
 };
