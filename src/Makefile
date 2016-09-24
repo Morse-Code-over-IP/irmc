@@ -13,7 +13,7 @@ options:
 	@echo "CC       = ${CC}"
 	@echo "INSTALLDIR = ${INSTALLDIR}"
 
-.cpp.o:
+.c.o:
 	@echo CC $<
 	@${CC} -c ${CFLAGS} $<
 
