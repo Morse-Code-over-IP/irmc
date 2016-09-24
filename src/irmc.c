@@ -71,7 +71,7 @@ int last_message = 0;
 char last_sender[16];
 
 /* settings */
-int translate = 0;
+int translate = 1;
 int audio_status = 1;
 
 /* portable time, as listed in https://gist.github.com/jbenet/1087739  */
