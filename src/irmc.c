@@ -206,53 +206,6 @@ int send_unlatch (void)
 	return 0;
 }
 
-/* read commands like
-.latch
-.unlatch
-.ton
-.toff
-*/
-int commandmode(void)
-{
-	char cmd[32];
-
-	last_message = 0; /* reset status message */
-	fgets(cmd, 32, stdin);
-	if(strncmp(cmd, ".", 1) == 0){
-		printf(" - . detected\n");
-		return 1;
-	}
-	if((strncmp(cmd, "latch", 3)) == 0){
-		send_latch();
-		return 0;
-	}
-
-	if((strncmp(cmd, "unlatch", 3)) == 0){
-		send_unlatch();
-		return 0;
-	}
-	if((strncmp(cmd, "ton", 3)) == 0){
-		translate = 1;
-		return 0;
-	}
-	if((strncmp(cmd, "toff", 3)) == 0){
-		translate = 0;
-		return 0;
-	}
-	
-	if((strncmp(cmd, "aon", 3)) == 0){
-		audio_status = 1;
-		return 0;
-	}
-	if((strncmp(cmd, "aoff", 3)) == 0){
-		audio_status = 0;
-		return 0;
-	}
-	printf("unknown command\n");
-	return 0;
-}
-
-
 void message(int msg)
 {       
 	switch(msg){
@@ -493,7 +446,6 @@ int main(int argc, char *argv[])
 
 		if(kbhit() && tx_timer == 0){
 			getchar(); /* flush the buffer */
-			if(commandmode()== 1)break;
 		}
 	} /* End of mainloop */
 
