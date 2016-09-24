@@ -13,6 +13,7 @@
 #include <math.h>
 #include <fcntl.h>
 #include <pthread.h>
+#define BEEP_MORSE
 #ifdef BEEP_MORSE
 	#include <morse/beep.h>
 #else
@@ -39,7 +40,7 @@
 	#include "beep.h"
 #endif
 
-#define DEBUG 1
+//#define DEBUG 1
 
 #define MAXDATASIZE 1024 // max number of bytes we can get at once 
 
@@ -58,6 +59,11 @@ long tx_timer = 0;
 #define TX_WAIT  5000
 #define TX_TIMEOUT 240.0 
 #define KEEPALIVE_CYCLE 100
+
+/* TX Methods */
+#define TX_NONE 0
+#define TX_SERIAL 1
+#define TX_KEYBOARD 2
 
 long key_press_t1;
 long key_release_t1;
@@ -174,37 +180,55 @@ void txloop (void)
 	}
 }
 
+int send_latch (void)
+{
+	int i;
+	tx_sequence++;
+	tx_data_packet.sequence = tx_sequence;
+	tx_data_packet.code[0] = -1;
+	tx_data_packet.code[1] = 1;
+	tx_data_packet.n = 2;
+	for(i = 0; i < 5; i++) send(fd_socket, &tx_data_packet, SIZE_DATA_PACKET, 0);
+	tx_data_packet.n = 0;
+	return 0;
+}
+
+int send_unlatch (void)
+{
+	int i;
+	tx_sequence++;
+	tx_data_packet.sequence = tx_sequence;
+	tx_data_packet.code[0] = -1;
+	tx_data_packet.code[1] = 2;
+	tx_data_packet.n = 2;
+	for(i = 0; i < 5; i++) send(fd_socket, &tx_data_packet, SIZE_DATA_PACKET, 0);
+	tx_data_packet.n = 0;
+	return 0;
+}
+
+/* read commands like
+.latch
+.unlatch
+.ton
+.toff
+*/
 int commandmode(void)
 {
 	char cmd[32];
-	int i;
 
 	last_message = 0; /* reset status message */
-	printf(".");
 	fgets(cmd, 32, stdin);
 	if(strncmp(cmd, ".", 1) == 0){
-		printf("\n");
+		printf(" - . detected\n");
 		return 1;
 	}
 	if((strncmp(cmd, "latch", 3)) == 0){
-		tx_sequence++;
-		tx_data_packet.sequence = tx_sequence;
-		tx_data_packet.code[0] = -1;
-		tx_data_packet.code[1] = 1;
-		tx_data_packet.n = 2;
-		for(i = 0; i < 5; i++) send(fd_socket, &tx_data_packet, SIZE_DATA_PACKET, 0);
-		tx_data_packet.n = 0;
+		send_latch();
 		return 0;
 	}
 
 	if((strncmp(cmd, "unlatch", 3)) == 0){
-		tx_sequence++;
-		tx_data_packet.sequence = tx_sequence;
-		tx_data_packet.code[0] = -1;
-		tx_data_packet.code[1] = 2;
-		tx_data_packet.n = 2;
-		for(i = 0; i < 5; i++) send(fd_socket, &tx_data_packet, SIZE_DATA_PACKET, 0);
-		tx_data_packet.n = 0;
+		send_unlatch();
 		return 0;
 	}
 	if((strncmp(cmd, "ton", 3)) == 0){
@@ -224,7 +248,7 @@ int commandmode(void)
 		audio_status = 0;
 		return 0;
 	}
-	printf("?\n");
+	printf("unknown command\n");
 	return 0;
 }
 
@@ -273,13 +297,14 @@ int main(int argc, char *argv[])
 	int channel;
 	char id[SIZE_ID];
 	char serialport[64];
+	int tx_method = TX_NONE;
 
 	// Set default values
 	snprintf(hostname, 64, "mtc-kob.dyndns.org");
 	snprintf(port, 16, "7890");
 	channel = 103;
 	snprintf(id, SIZE_ID, "irmc-default");
-	snprintf(serialport, 64, "/dev/tty.usbserial");
+	snprintf(serialport, 64, "");
 
 	// Read commandline
 	opterr = 0; 
@@ -311,7 +336,7 @@ int main(int argc, char *argv[])
 				fprintf(stderr, "   -p [port]         Port of morsekob server. Default: %s\n", port);
 				fprintf(stderr, "   -c [channel]      Channel. Default: %d\n", channel);
 				fprintf(stderr, "   -i [id]           My ID. Default: %s\n", id);
-				fprintf(stderr, "   -s [serialport]   Serial port device name. Default: %s\n", serialport);
+				fprintf(stderr, "   -s [serialport]   Serial port device name. Example: /dev/tty.usbserial Default: \"%s\"\n", serialport);
 				return 1;
 			default: 
 				abort ();
@@ -364,10 +389,15 @@ int main(int argc, char *argv[])
 			s, sizeof s);
 	fprintf(stderr, "Connected to %s.\n", s);
 	beep_init();
-	fd_serial = open(serialport, O_RDWR | O_NOCTTY | O_NDELAY);
-	if(fd_serial == -1) {
-    		fprintf(stderr,"Unable to open serial port %s.\n", serialport);
-    	}
+	if ((strcmp (serialport, "")) != 0) 
+		tx_method = TX_SERIAL; 
+
+	if (tx_method == TX_SERIAL) {
+		fd_serial = open(serialport, O_RDWR | O_NOCTTY | O_NDELAY);
+		if(fd_serial == -1) {
+    			fprintf(stderr,"Unable to open serial port %s.\n", serialport);
+    		}
+	}
 	freeaddrinfo(servinfo); /* all done with this structure */
 
 	key_release_t1 = fastclock();
@@ -380,6 +410,7 @@ int main(int argc, char *argv[])
 				usleep(250);
 		if(numbytes == SIZE_DATA_PACKET && tx_timer == 0){
 			memcpy(&rx_data_packet, buf, SIZE_DATA_PACKET);
+
 		#if DEBUG  
 			printf("length: %i\n", rx_data_packet.length);
 			printf("id: %s\n", rx_data_packet.id);
@@ -389,6 +420,7 @@ int main(int argc, char *argv[])
 			printf("code:\n");
 			for(i = 0; i < SIZE_CODE; i++)printf("%i ", rx_data_packet.code[i]); printf("\n");
 		#endif
+
 			if(rx_data_packet.n > 0 && rx_sequence != rx_data_packet.sequence){
 				message(2);
 				if(translate == 1){
@@ -438,11 +470,13 @@ int main(int argc, char *argv[])
 		#endif
 			tx_data_packet.n = 0;
 		}
-		ioctl(fd_serial,TIOCMGET, &serial_status);
-		if(serial_status & TIOCM_DSR){
-			txloop();
-			tx_timer = TX_WAIT;
-			message(1);
+		if (tx_method == TX_SERIAL) {
+			ioctl(fd_serial,TIOCMGET, &serial_status);
+			if(serial_status & TIOCM_DSR){
+				txloop();
+				tx_timer = TX_WAIT;
+				message(1);
+			}
 		}
 		
 		if(keepalive_t < 0 && tx_timer == 0){
