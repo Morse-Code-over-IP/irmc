@@ -35,21 +35,13 @@
     #include <asm-generic/termios.h>
 #endif 
 
- 
 //#define DEBUG 1
 
 #define MAXDATASIZE 1024 // max number of bytes we can get at once 
 
 #include "cwprotocol.h"
 
-struct command_packet_format connect_packet = {CON, DEFAULT_CHANNEL}; 
-struct command_packet_format disconnect_packet = {DIS, 0};
-struct data_packet_format id_packet;
-struct data_packet_format rx_data_packet;
-struct data_packet_format tx_data_packet;
-
-int serial_status = 0, fd_serial, fd_socket, numbytes;
-int tx_sequence = 0, rx_sequence;
+int serial_status = 0, fd_serial, numbytes;
 
 double tx_timeout = 0;
 long tx_timer = 0;
@@ -84,7 +76,6 @@ void current_utc_time(struct timespec *ts) {
 #else
   clock_gettime(CLOCK_REALTIME, ts);
 #endif
- 
 }
 
 /* a better clock() in milliseconds */
@@ -125,14 +116,6 @@ void *get_in_addr(struct sockaddr *sa)
 	return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
 
-// connect to server and send my id.
-void identifyclient(void)
-{
-	tx_sequence++;
-	id_packet.sequence = tx_sequence;
-	send(fd_socket, &connect_packet, SIZE_COMMAND_PACKET, 0);
-	send(fd_socket, &id_packet, SIZE_DATA_PACKET, 0);
-}
 
 // disconnect from the server
 void inthandler(int sig)
@@ -176,31 +159,6 @@ void txloop (void)
 	}
 }
 
-int send_latch (void)
-{
-	int i;
-	tx_sequence++;
-	tx_data_packet.sequence = tx_sequence;
-	tx_data_packet.code[0] = -1;
-	tx_data_packet.code[1] = 1;
-	tx_data_packet.n = 2;
-	for(i = 0; i < 5; i++) send(fd_socket, &tx_data_packet, SIZE_DATA_PACKET, 0);
-	tx_data_packet.n = 0;
-	return 0;
-}
-
-int send_unlatch (void)
-{
-	int i;
-	tx_sequence++;
-	tx_data_packet.sequence = tx_sequence;
-	tx_data_packet.code[0] = -1;
-	tx_data_packet.code[1] = 2;
-	tx_data_packet.n = 2;
-	for(i = 0; i < 5; i++) send(fd_socket, &tx_data_packet, SIZE_DATA_PACKET, 0);
-	tx_data_packet.n = 0;
-	return 0;
-}
 
 void message(int msg)
 {       

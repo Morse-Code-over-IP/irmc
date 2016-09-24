@@ -40,6 +40,23 @@ struct data_packet_format{
 // Define the packets used
 #define DEFAULT_CHANNEL 103
 
+/* Define functions provided by cwprotocol */ 
 int prepare_id (struct data_packet_format *id_packet, char *id);
 int prepare_tx (struct data_packet_format *tx_packet, char *id);
+void identifyclient (void);
+int send_latch (void);
+int send_unlatch (void);
+
+/* Define external struct for global variables */
+extern struct command_packet_format connect_packet;
+extern struct command_packet_format disconnect_packet;
+extern struct data_packet_format id_packet;
+extern struct data_packet_format rx_data_packet;
+extern struct data_packet_format tx_data_packet;
+
+extern int tx_sequence, rx_sequence;
+
+extern int fd_socket;
+
+
 
