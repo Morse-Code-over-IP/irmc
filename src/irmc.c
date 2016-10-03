@@ -353,11 +353,11 @@ int main(int argc, char *argv[])
 							else
 							{
 								if(length < 0) {
-									beep(0.0, abs(length)/1000.);
+									//beep(0.0, abs(length)/1000.);
 								}
 								else
 								{
-									beep(1000.0, length/1000.);
+									//beep(1000.0, length/1000.);
 								}
 							}
 						}
