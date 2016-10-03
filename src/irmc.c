@@ -19,6 +19,9 @@
 #include <sys/time.h>
 #include <stdio.h>
 
+
+// raspi wiring: http://raspberrypiguide.de/howtos/raspberry-pi-gpio-how-to/
+
 // Detect OSX
 #ifdef __MACH__
     #include <mach/clock.h>
