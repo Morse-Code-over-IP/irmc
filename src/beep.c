@@ -84,7 +84,7 @@ int buzzer_start(void)
     err = Pa_Initialize();
     if( err != paNoError ) goto error;
 
-    outputParameters.device = Pa_GetDefaultOutputDevice(); /* default output device */
+    outputParameters.device = 1;//Pa_GetDefaultOutputDevice(); /* default output device */
     outputParameters.channelCount = 1;       /* stereo output */
     outputParameters.sampleFormat = paUInt8; /* 32 bit floating point output */
     outputParameters.suggestedLatency = Pa_GetDeviceInfo( outputParameters.device )->defaultLowOutputLatency;
