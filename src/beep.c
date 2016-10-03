@@ -232,6 +232,7 @@ int beep_test(void)
    printf("Playback open error: %s\n", snd_strerror(err));
    exit(EXIT_FAILURE);
     }
+
     f1 = 0.02;
     f2 = 0.02;
     p1 = p2 = 0.0;
