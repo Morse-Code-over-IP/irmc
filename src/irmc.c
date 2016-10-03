@@ -356,9 +356,7 @@ int main(int argc, char *argv[])
 							else
 							{
 								if(length < 0) {
-									buzzer_close();
 									beep(0.0, abs(length)/1000.);
-									buzzer_start();
 								}
 								else
 								{
