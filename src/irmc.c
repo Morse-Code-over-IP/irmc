@@ -19,13 +19,6 @@
 #include <sys/time.h>
 #include <stdio.h>
 
-#define BEEP_MORSE
-#ifdef BEEP_MORSE
-	#include <morse/beep.h>
-#else
-	#include "portaudio.h"
-#endif
-
 #ifdef __MACH__
     #include <mach/clock.h>
     #include <mach/mach.h>
@@ -40,6 +33,7 @@
 #define MAXDATASIZE 1024 // max number of bytes we can get at once 
 
 #include "cwprotocol.h"
+#include "beep.h"
 
 int serial_status = 0, fd_serial, numbytes;
 
