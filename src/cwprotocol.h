@@ -1,4 +1,4 @@
-#define INTERFACE_VERSION "irmc v0.02"
+#define INTERFACE_VERSION "irmc v0.3.3"
 
 // Structures for the packets: unsigned short command
 #define DIS 0x0002 // disconnect
