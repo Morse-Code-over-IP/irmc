@@ -10,6 +10,8 @@
 #define M_PI  (3.14159265)
 #endif
 
+// OSX Code
+#ifdef __MACH__
 typedef struct
 {
     uint32_t total_count;
@@ -32,6 +34,8 @@ int buzzer_start(void);
 int buzzer_stop();
 void msleep(int d);
 int beep_test(void);
+#endif
+
 
 // compatibility to old interface
 int beep(double freq_hz, double duration_sec);

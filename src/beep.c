@@ -3,8 +3,11 @@
 #include <stdint.h>
 #include <unistd.h> // for usleep()
 #include <portaudio.h>
+
 #include "beep.h"
  
+// OSX Code
+#ifdef __MACH__
 // http://stackoverflow.com/questions/7678470/generating-sound-of-a-particular-frequency-using-gcc-in-ubuntu
 
 static PaStream *stream;
@@ -84,7 +87,7 @@ int buzzer_start(void)
     err = Pa_Initialize();
     if( err != paNoError ) goto error;
 
-    outputParameters.device = 1;//Pa_GetDefaultOutputDevice(); /* default output device */
+    outputParameters.device = Pa_GetDefaultOutputDevice(); /* default output device */
     outputParameters.channelCount = 1;       /* stereo output */
     outputParameters.sampleFormat = paUInt8; /* 32 bit floating point output */
     outputParameters.suggestedLatency = Pa_GetDeviceInfo( outputParameters.device )->defaultLowOutputLatency;
@@ -179,3 +182,74 @@ int beep_test(void)
 
     return 0;
 }
+#endif
+
+
+
+// Raspi does not work with portaudio?!
+#ifdef __ARM__
+/*
+ * This extra small demo sends sinusoidal  samples to your speakers.
+ */
+#include <stdint.h>
+#include <alsa/asoundlib.h>
+#include <math.h>
+
+static char *device = "hw:0,0"; /* playback device */
+snd_output_t *output = NULL;
+
+#define FRAMES 16384L
+
+int16_t buffer[FRAMES*2]; /* 16bit stereo sound samples */
+int main(void)
+{
+    int err;
+    double p1,p2,f1,f2;
+    unsigned int i,j;
+    snd_pcm_t *handle;
+    snd_pcm_sframes_t frames;
+    
+    if ((err = snd_pcm_open(&handle, device, SND_PCM_STREAM_PLAYBACK, 0)) < 0) {
+   printf("Playback open error: %s\n", snd_strerror(err));
+   exit(EXIT_FAILURE);
+    }
+    if ((err = snd_pcm_set_params(handle,
+              SND_PCM_FORMAT_S16_LE,
+              SND_PCM_ACCESS_RW_INTERLEAVED,
+              2,
+              48000,
+              1,
+              500000)) < 0) { /* 0.5sec */
+   printf("Playback open error: %s\n", snd_strerror(err));
+   exit(EXIT_FAILURE);
+    }
+    f1 = 0.02;
+    f2 = 0.02;
+    p1 = p2 = 0.0;
+    for (i = 0; i < 64; i++) {
+   for (j = 0; j < FRAMES*2; j+=2)
+   {  
+       buffer[j] = 30000.0 * sin(p1);
+       buffer[j+1] = 30000.0 * sin(p2);
+       p1 += f1;
+       p2 += f2;
+   }
+   f1 += 0.0001;
+   f2 += 0.00012;
+
+
+   frames = snd_pcm_writei(handle, buffer, FRAMES);
+
+   if (frames < 0)
+       frames = snd_pcm_recover(handle, frames, 0);
+   if (frames < 0) {
+       printf("snd_pcm_writei failed: %s\n", snd_strerror(err));
+       break;
+   }
+   if (frames > 0 && frames < FRAMES)
+       printf("Short write (expected %li, wrote %li)\n", FRAMES, (long)frames);
+    }
+    snd_pcm_close(handle);
+    return 0;
+}
+#endif
