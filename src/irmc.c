@@ -296,7 +296,9 @@ int main(int argc, char *argv[])
 	inet_ntop(p->ai_family, get_in_addr((struct sockaddr *)p->ai_addr),
 			s, sizeof s);
 	fprintf(stderr, "Connected to %s.\n", s);
+
 	beep_init();
+
 	if ((strcmp (serialport, "")) != 0) 
 		tx_method = TX_SERIAL; 
 
@@ -354,7 +356,9 @@ int main(int argc, char *argv[])
 							else
 							{
 								if(length < 0) {
+									buzzer_close();
 									beep(0.0, abs(length)/1000.);
+									buzzer_start();
 								}
 								else
 								{

@@ -141,9 +141,15 @@ void msleep(int d){
 
 int beep(double freq_hz, double duration_sec)
 {
-	buzzer_set_freq(freq_hz);
-	msleep(duration_sec*1000.);
-	buzzer_set_freq(0.);
+	if (freq_hz > 0.0) {	
+		buzzer_set_freq(freq_hz);
+		msleep(duration_sec*1000.);
+		buzzer_set_freq(0.);
+	}
+	else
+	{
+		msleep(duration_sec*1000.);
+	}
 	return 0;
 }
 int beep_init()
