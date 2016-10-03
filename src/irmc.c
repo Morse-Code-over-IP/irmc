@@ -400,6 +400,7 @@ int main(int argc, char *argv[])
 	send(fd_socket, &disconnect_packet, SIZE_COMMAND_PACKET, 0);	
 	close(fd_socket);
 	close(fd_serial);
+	buzzer_stop();
 
 	exit(0); 
 }
