@@ -36,3 +36,4 @@ int beep_test(void);
 // compatibility to old interface
 int beep(double freq_hz, double duration_sec);
 int beep_init();
+int beep_close();

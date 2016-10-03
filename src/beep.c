@@ -152,6 +152,12 @@ int beep_init()
 	return 0;
 }
 
+int beep_close()
+{
+	buzzer_stop();
+	return 0;
+}
+
 
 int beep_test(void)
 {
