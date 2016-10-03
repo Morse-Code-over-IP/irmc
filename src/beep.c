@@ -6,8 +6,6 @@
 
 #include "beep.h"
  
-// OSX Code
-#ifdef __MACH__
 // http://stackoverflow.com/questions/7678470/generating-sound-of-a-particular-frequency-using-gcc-in-ubuntu
 
 static PaStream *stream;
@@ -182,12 +180,11 @@ int beep_test(void)
 
     return 0;
 }
-#endif
 
 
 
 // Raspi does not work with portaudio?!
-#ifdef __ARM__
+#ifdef __ARM1__
 /*
  * This extra small demo sends sinusoidal  samples to your speakers.
  */
@@ -201,7 +198,7 @@ snd_output_t *output = NULL;
 #define FRAMES 16384L
 
 int16_t buffer[FRAMES*2]; /* 16bit stereo sound samples */
-int main(void)
+int beep_test(void)
 {
     int err;
     double p1,p2,f1,f2;
