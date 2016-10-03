@@ -19,14 +19,18 @@
 #include <sys/time.h>
 #include <stdio.h>
 
+// Detect OSX
 #ifdef __MACH__
     #include <mach/clock.h>
     #include <mach/mach.h>
-#else
+#endif 
+
+// Detect Raspi
+#ifdef __ARM
     #include <linux/ioctl.h>
     #include <asm-generic/ioctl.h>
     #include <asm-generic/termios.h>
-#endif 
+#endif
 
 //#define DEBUG 1
 
