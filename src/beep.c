@@ -4,7 +4,6 @@
 #include <unistd.h> // for usleep()
 #include <portaudio.h>
 #include "beep.h"
-
  
 // http://stackoverflow.com/questions/7678470/generating-sound-of-a-particular-frequency-using-gcc-in-ubuntu
 
