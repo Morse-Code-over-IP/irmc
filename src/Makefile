@@ -21,8 +21,9 @@ irmc:   ${OBJ}
 	@echo CC -o $@
 	@${CC} -o $@ ${OBJ} ${LDFLAGS}
 
-raspi:	${OBJ}
-	@${CC} -D RASPI -o irmc ${OBJ} ${LDFLAGS} -lwiringPi
+raspi:	
+	@${CC} -c -DRASPI ${CFLAGS} ${SRC}
+	@${CC} -o irmc ${OBJ} ${LDFLAGS} -lwiringPi
 
 java:
 	java -jar test/MorseKOB.jar 
