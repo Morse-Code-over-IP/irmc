@@ -220,11 +220,11 @@ int beep(double freq_hz, double duration_sec)
     f1 = 0.02;
     f2 = 0.02;
     p1 = p2 = 0.0;
-    for (i = 0; i < 1; i++) {
+    for (i = 0; i < 3; i++) {
    for (j = 0; j < FRAMES*2; j+=2)
    {  
-       buffer[j] = 60000.0 * sin(p1);
-       buffer[j+1] = 30000.0 * sin(p2);
+       buffer[j] = freq_hz*100.0 * sin(p1);
+       buffer[j+1] = freq_hz*100.0 * sin(p2);
        p1 += f1;
        p2 += f2;
    }
