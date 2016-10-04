@@ -185,7 +185,6 @@ int beep(double freq_hz, double duration_sec)
 if (freq_hz <= 0.0)
 {
 		msleep(duration_sec*1000.);
-printf (" no tone ");
 return 0;
 }
   double p1,p2,f1,f2;
