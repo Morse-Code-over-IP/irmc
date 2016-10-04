@@ -1,7 +1,7 @@
-SRC = util.c irmc.c cwprotocol.c beep.c
+SRC = irmc.c cwprotocol.c beep.c
 OBJ = ${SRC:.c=.o}
 LDFLAGS = -lportaudio -lpthread -lm 
-CFLAGS = -Wall -Wno-format-zero-length -Wno-unused-function
+CFLAGS = -Wall 
 INSTALLDIR = ${HOME}/bin
 
 all: options irmc 
@@ -19,7 +19,7 @@ options:
 
 irmc:   ${OBJ}
 	@echo CC -o $@
-	@${CC} -o $@ ${OBJ} ${LDFLAGS} 
+	@${CC} -o $@ ${OBJ} ${LDFLAGS}
 
 java:
 	java -jar test/MorseKOB.jar 
@@ -27,12 +27,5 @@ java:
 clean:
 	@echo cleaning
 	@rm -f irmc irmc.core ${OBJ} 
-
-linux: 	${OBJ}
-	@echo CC -o irmc
-	@${CC} -o irmc ${OBJ} ${LDFLAGS} -lasound
-
-
-
 install: irmc
 	cp irmc ${INSTALLDIR}

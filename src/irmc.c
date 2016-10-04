@@ -15,9 +15,18 @@
 #include <pthread.h>
 #include <signal.h>
 #include <arpa/inet.h>
+#include <time.h>
+#include <sys/time.h>
+#include <stdio.h>
 
-
-// raspi wiring: http://raspberrypiguide.de/howtos/raspberry-pi-gpio-how-to/
+#ifdef __MACH__
+    #include <mach/clock.h>
+    #include <mach/mach.h>
+#else
+    #include <linux/ioctl.h>
+    #include <asm-generic/ioctl.h>
+    #include <asm-generic/termios.h>
+#endif 
 
 //#define DEBUG 1
 
@@ -25,7 +34,6 @@
 
 #include "cwprotocol.h"
 #include "beep.h"
-#include "util.h"
 
 int serial_status = 0, fd_serial, numbytes;
 
@@ -49,6 +57,59 @@ char last_sender[16];
 int translate = 1;
 int audio_status = 1;
 
+/* portable time, as listed in https://gist.github.com/jbenet/1087739  */
+void current_utc_time(struct timespec *ts) {
+#ifdef __MACH__ // OS X does not have clock_gettime, use clock_get_time
+  clock_serv_t cclock;
+  mach_timespec_t mts;
+  host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &cclock);
+  clock_get_time(cclock, &mts);
+  mach_port_deallocate(mach_task_self(), cclock);
+  ts->tv_sec = mts.tv_sec;
+  ts->tv_nsec = mts.tv_nsec;
+#else
+  clock_gettime(CLOCK_REALTIME, ts);
+#endif
+}
+
+/* a better clock() in milliseconds */
+long fastclock(void)
+{
+	struct timespec t;
+	long r;
+
+	current_utc_time (&t);
+	r = t.tv_sec * 1000;
+	r = r + t.tv_nsec / 1000000;
+	return r;
+}
+
+int kbhit (void)
+{
+  	struct timeval tv;
+  	fd_set rdfs;
+
+  	tv.tv_sec = 0;
+  	tv.tv_usec = 0;
+
+  	FD_ZERO(&rdfs);
+  	FD_SET (STDIN_FILENO, &rdfs);
+
+  	select (STDIN_FILENO+1, &rdfs, NULL, NULL, &tv);
+  	return FD_ISSET(STDIN_FILENO, &rdfs);
+}
+
+
+/* get sockaddr, IPv4 or IPv6: */
+void *get_in_addr(struct sockaddr *sa)
+{
+	if (sa->sa_family == AF_INET) {
+		return &(((struct sockaddr_in*)sa)->sin_addr);
+	}
+
+	return &(((struct sockaddr_in6*)sa)->sin6_addr);
+}
+
 
 // disconnect from the server
 void inthandler(int sig)
@@ -60,7 +121,6 @@ void inthandler(int sig)
 	exit(1);
 }
 
-// main tx loop
 void txloop (void)
 {
 	key_press_t1 = fastclock();
@@ -93,7 +153,7 @@ void txloop (void)
 	}
 }
 
-// screen output 
+
 void message(int msg)
 {       
 	switch(msg){
@@ -229,9 +289,7 @@ int main(int argc, char *argv[])
 	inet_ntop(p->ai_family, get_in_addr((struct sockaddr *)p->ai_addr),
 			s, sizeof s);
 	fprintf(stderr, "Connected to %s.\n", s);
-
 	beep_init();
-
 	if ((strcmp (serialport, "")) != 0) 
 		tx_method = TX_SERIAL; 
 
@@ -342,7 +400,7 @@ int main(int argc, char *argv[])
 	send(fd_socket, &disconnect_packet, SIZE_COMMAND_PACKET, 0);	
 	close(fd_socket);
 	close(fd_serial);
-	beep_close();
+	buzzer_stop();
 
 	exit(0); 
 }
