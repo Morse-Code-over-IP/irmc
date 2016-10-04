@@ -228,9 +228,6 @@ int beep(double freq_hz, double duration_sec)
        p1 += f1;
        p2 += f2;
    }
-   f1 += 0.0001;
-   f2 += 0.00012;
-
 
    frames = snd_pcm_writei(handle, buffer, FRAMES);
 
