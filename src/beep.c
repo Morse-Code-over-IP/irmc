@@ -204,6 +204,9 @@ if (i<up_count)
        p1 += f1;
        p2 += f2;
 }
+else
+{buffer[j]=buffer[j+1]=0.;}
+
    }
 
    frames = snd_pcm_writei(handle, buffer, FRAMES);
