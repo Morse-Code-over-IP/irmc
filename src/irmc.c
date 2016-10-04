@@ -42,7 +42,7 @@ long tx_timer = 0;
 /* TX Methods */
 #define TX_NONE 0
 //#define TX_SERIAL 1
-#define TX_KEYBOARD 2
+//#define TX_KEYBOARD 2 // not implemented yet
 #define TX_RASPI 3
 
 long key_press_t1;
@@ -80,9 +80,7 @@ void txloop (void)
 		while(serial_status & TIOCM_DSR) ioctl(fd_serial, TIOCMGET, &serial_status);
 #endif
 #ifdef RASPI
-		while(digitalRead(TX_RASPI_PIN)==1) 
-{
-}
+		while(digitalRead(TX_RASPI_PIN)==1) { }
 #endif
 		key_release_t1 = fastclock();
 
@@ -245,7 +243,7 @@ int main(int argc, char *argv[])
 	inet_ntop(p->ai_family, get_in_addr((struct sockaddr *)p->ai_addr),
 			s, sizeof s);
 	fprintf(stderr, "Connected to %s.\n", s);
-	beep_init();
+
 #ifdef TX_SERIAL
 	fd_serial = open(serialport, O_RDWR | O_NOCTTY | O_NDELAY);
 	if(fd_serial == -1) {
@@ -260,16 +258,15 @@ int main(int argc, char *argv[])
 		exit (1);
 	}
 	pinMode(TX_RASPI_PIN, INPUT);
-
 #endif
  
 	freeaddrinfo(servinfo); /* all done with this structure */
 
 	key_release_t1 = fastclock();
 	identifyclient();
-
-
    
+	beep_init();
+
 	/* Main Loop */
 	for(;;) {
   		if(tx_timer == 0) 
