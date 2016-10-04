@@ -41,7 +41,7 @@ long tx_timer = 0;
 
 /* TX Methods */
 #define TX_NONE 0
-#define TX_SERIAL 1
+//#define TX_SERIAL 1
 #define TX_KEYBOARD 2
 #define TX_RASPI 3
 
@@ -74,7 +74,9 @@ void txloop (void)
 			(int) ((key_press_t1 - key_release_t1) * -1);
 
 		//printf("space: %i\n", tx_data_packet.code[tx_data_packet.n -1]);
+#ifdef TX_SERIAL
 		while(serial_status & TIOCM_DSR) ioctl(fd_serial, TIOCMGET, &serial_status);
+#endif
 #ifdef RASPI
 		while(digitalRead(5)==1) 
 {
@@ -88,8 +90,10 @@ void txloop (void)
 		
 		//printf("mark: %i\n", tx_data_packet.code[tx_data_packet.n -1]);
 		while(1){
+#ifdef TX_SERIAL
 			ioctl(fd_serial, TIOCMGET, &serial_status);
 			if(serial_status & TIOCM_DSR) break;
+#endif
 #ifdef RASPI
 			if(digitalRead(5)==1) break;
 #endif
@@ -241,6 +245,7 @@ int main(int argc, char *argv[])
 			s, sizeof s);
 	fprintf(stderr, "Connected to %s.\n", s);
 	beep_init();
+#ifdef TX_SERIAL
 	if ((strcmp (serialport, "")) != 0) 
 		tx_method = TX_SERIAL; 
 
@@ -250,6 +255,7 @@ int main(int argc, char *argv[])
     			fprintf(stderr,"Unable to open serial port %s.\n", serialport);
     		}
 	}
+#endif
 
 #ifdef RASPI
   // Starte die WiringPi-Api (wichtig)
@@ -336,6 +342,7 @@ tx_method = TX_RASPI;
 		#endif
 			tx_data_packet.n = 0;
 		}
+#ifdef TX_SERIAL
 		if (tx_method == TX_SERIAL) {
 			ioctl(fd_serial,TIOCMGET, &serial_status);
 			if(serial_status & TIOCM_DSR){
@@ -344,6 +351,7 @@ tx_method = TX_RASPI;
 				message(1);
 			}
 		}
+#endif
 
 #ifdef RASPI
 	if (tx_method == TX_RASPI) {
@@ -375,7 +383,9 @@ tx_method = TX_RASPI;
 
 	send(fd_socket, &disconnect_packet, SIZE_COMMAND_PACKET, 0);	
 	close(fd_socket);
+#ifdef TX_SERIAL
 	close(fd_serial);
+#endif
 	buzzer_stop();
 
 	exit(0); 
