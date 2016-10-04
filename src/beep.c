@@ -208,7 +208,11 @@ snd_output_t *output = NULL;
 
 int beep_test(void)
 {
-    double p1,p2,f1,f2;
+  }
+
+int beep(double freq_hz, double duration_sec)
+{
+  double p1,p2,f1,f2;
     unsigned int i,j;
     snd_pcm_sframes_t frames;
     
@@ -239,10 +243,7 @@ int beep_test(void)
        printf("Short write (expected %li, wrote %li)\n", FRAMES, (long)frames);
     }
     return 0;
-}
 
-int beep(double freq_hz, double duration_sec)
-{
 }
 int beep_init()
 {
