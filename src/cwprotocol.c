@@ -41,7 +41,7 @@ int prepare_tx (struct data_packet_format *tx_packet, char *id)
 	tx_packet->a21 = 0; /* These magic numbers was provided by Les Kerr */
 	tx_packet->a22 = 755;
 	tx_packet->a23 = 16777215;
-	snprintf(tx_packet->status, SIZE_STATUS, "?");
+	snprintf(tx_packet->status, SIZE_STATUS, "no");
 	
 	return 0;
 }
