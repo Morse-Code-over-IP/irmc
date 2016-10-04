@@ -196,7 +196,7 @@ int beep(double freq_hz, double duration_sec)
    for (j = 0; j < FRAMES*2 ; j+=2)
    //for (j = 0; j < up_count*2; j+=2)
    {  
-i += 2;
+i += 1;
 if (i<up_count)
 {
        buffer[j] = freq_hz*100.0 * sin(p1);
