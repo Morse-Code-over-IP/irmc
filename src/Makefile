@@ -22,7 +22,7 @@ irmc:   ${OBJ}
 	@${CC} -o $@ ${OBJ} ${LDFLAGS}
 
 raspi:	${OBJ}
-	@${CC} -o irmc ${OBJ} ${LDFLAGS} -lwiringPi
+	@${CC} -D RASPI -o irmc ${OBJ} ${LDFLAGS} -lwiringPi
 
 java:
 	java -jar test/MorseKOB.jar 
