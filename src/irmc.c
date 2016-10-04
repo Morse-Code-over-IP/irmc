@@ -75,7 +75,9 @@ void txloop (void)
 		tx_data_packet.code[tx_data_packet.n - 1] = 
 			(int) ((key_press_t1 - key_release_t1) * -1);
 
-		//printf("space: %i\n", tx_data_packet.code[tx_data_packet.n -1]);
+#ifdef DEBUG
+		printf("space: %i\n", tx_data_packet.code[tx_data_packet.n -1]);
+#endif
 #ifdef TX_SERIAL
 		while(serial_status & TIOCM_DSR) ioctl(fd_serial, TIOCMGET, &serial_status);
 #endif
@@ -87,8 +89,10 @@ void txloop (void)
 		tx_data_packet.n++;	
 		tx_data_packet.code[tx_data_packet.n - 1] =
 			(int) ((key_release_t1 - key_press_t1) * 1);
-		
-		//printf("mark: %i\n", tx_data_packet.code[tx_data_packet.n -1]);
+
+#ifdef DEBUG		
+		printf("mark: %i\n", tx_data_packet.code[tx_data_packet.n -1]);
+#endif
 		while(1){
 #ifdef TX_SERIAL
 			ioctl(fd_serial, TIOCMGET, &serial_status);
