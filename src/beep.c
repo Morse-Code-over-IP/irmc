@@ -206,7 +206,7 @@ if (i<up_count)
        p2 += f2;
 }
 else
-{buffer[j]=buffer[j+1]=0.;}
+//{buffer[j]=buffer[j+1]=0.;}
 
    }
 
