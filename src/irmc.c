@@ -153,7 +153,6 @@ int main(int argc, char *argv[])
 	int channel;
 	char id[SIZE_ID];
 	char serialport[64];
-	int tx_method = TX_NONE;
 
 	// Set default values
 	snprintf(hostname, 64, "mtc-kob.dyndns.org");
@@ -246,20 +245,14 @@ int main(int argc, char *argv[])
 	fprintf(stderr, "Connected to %s.\n", s);
 	beep_init();
 #ifdef TX_SERIAL
-	if ((strcmp (serialport, "")) != 0) 
-		tx_method = TX_SERIAL; 
-
-	if (tx_method == TX_SERIAL) {
-		fd_serial = open(serialport, O_RDWR | O_NOCTTY | O_NDELAY);
-		if(fd_serial == -1) {
-    			fprintf(stderr,"Unable to open serial port %s.\n", serialport);
-    		}
-	}
+	fd_serial = open(serialport, O_RDWR | O_NOCTTY | O_NDELAY);
+	if(fd_serial == -1) {
+    	fprintf(stderr,"Unable to open serial port %s.\n", serialport);
+    	}
 #endif
 
 #ifdef RASPI
   // Starte die WiringPi-Api (wichtig)
-tx_method = TX_RASPI;
   if (wiringPiSetup() == -1)
     return 1;
  // Schalte GPIO 24 (=WiringPi Pin 5) auf Eingang
@@ -343,25 +336,20 @@ tx_method = TX_RASPI;
 			tx_data_packet.n = 0;
 		}
 #ifdef TX_SERIAL
-		if (tx_method == TX_SERIAL) {
-			ioctl(fd_serial,TIOCMGET, &serial_status);
-			if(serial_status & TIOCM_DSR){
-				txloop();
-				tx_timer = TX_WAIT;
-				message(1);
-			}
+		ioctl(fd_serial,TIOCMGET, &serial_status);
+		if(serial_status & TIOCM_DSR){
+			txloop();
+			tx_timer = TX_WAIT;
+			message(1);
 		}
 #endif
 
 #ifdef RASPI
-	if (tx_method == TX_RASPI) {
-			if(digitalRead(5)==1){
-				txloop();
-				tx_timer = TX_WAIT;
-				message(1);
-			}
+		if(digitalRead(5)==1){
+			txloop();
+			tx_timer = TX_WAIT;
+			message(1);
 		}
-
 #endif
 		
 		if(keepalive_t < 0 && tx_timer == 0){
