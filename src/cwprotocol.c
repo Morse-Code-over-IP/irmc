@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <sys/socket.h>
+
 #include "cwprotocol.h"
 
 /* Global variables */
@@ -41,7 +42,7 @@ int prepare_tx (struct data_packet_format *tx_packet, char *id)
 	tx_packet->a21 = 0; /* These magic numbers was provided by Les Kerr */
 	tx_packet->a22 = 755;
 	tx_packet->a23 = 16777215;
-	snprintf(tx_packet->status, SIZE_STATUS, "no");
+	snprintf(tx_packet->status, SIZE_STATUS, "?"); // this shall include the sent character
 	
 	return 0;
 }
