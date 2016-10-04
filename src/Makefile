@@ -29,8 +29,8 @@ clean:
 	@rm -f irmc irmc.core ${OBJ} 
 
 linux: 	${OBJ}
-	@echo CC -o $@
-	@${CC} -o $@ ${OBJ} ${LDFLAGS} -lasound
+	@echo CC -o irmc
+	@${CC} -o irmc ${OBJ} ${LDFLAGS} -lasound
 
 
 
