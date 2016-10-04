@@ -219,7 +219,7 @@ int beep(double freq_hz, double duration_sec)
  int up_count = (int)(SAMPLE_RATE * duration_sec);
  
  
-    p1 = p2 = f1 = f2 = 0.0;
+    p1 = p2 = f1 = f2 = 0.02;
     for (i = 0; i < 3; i++) {
    for (j = 0; j < FRAMES*2; j+=2)
    //for (j = 0; j < up_count*2; j+=2)
