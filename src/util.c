@@ -97,3 +97,7 @@ void *get_in_addr(struct sockaddr *sa)
 
 
 
+void msleep(int d){
+    usleep(d*1000);
+}
+

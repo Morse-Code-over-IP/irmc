@@ -133,9 +133,6 @@ error:
     fprintf( stderr, "Error message: %s\n", Pa_GetErrorText( err ) );
     return err;
 }
-void msleep(int d){
-    usleep(d*1000);
-}
 
 int beep(double freq_hz, double duration_sec)
 {
