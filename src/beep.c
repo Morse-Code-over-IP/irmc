@@ -184,6 +184,11 @@ snd_output_t *output = NULL;
 
 int beep(double freq_hz, double duration_sec)
 {
+if (freq_hz <= 0.)
+{
+		msleep(duration_sec*1000.);
+return 0;
+}
   double p1,p2,f1,f2;
     unsigned int i,j;
     snd_pcm_sframes_t frames;
