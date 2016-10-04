@@ -4,7 +4,6 @@
 #include <unistd.h> // for usleep()
 
 #include "beep.h"
-#include "util.h"
 
 #ifdef PORTAUDIO 
 // http://stackoverflow.com/questions/7678470/generating-sound-of-a-particular-frequency-using-gcc-in-ubuntu
@@ -184,7 +183,7 @@ int beep(double freq_hz, double duration_sec)
 {
 if (freq_hz <= 0.0)
 {
-		msleep(duration_sec*1000.);
+		usleep(duration_sec*1000.*1000);
 return 0;
 }
   double p1,p2,f1,f2;
