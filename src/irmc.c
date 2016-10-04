@@ -24,7 +24,7 @@
 #include "beep.h"
 #include "util.h"
 
-#define RASPI
+//#define RASPI
 // http://raspberrypiguide.de/howtos/raspberry-pi-gpio-how-to/
 #ifdef RASPI
 #include <wiringPi.h>
