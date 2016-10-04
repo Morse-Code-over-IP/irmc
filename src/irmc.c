@@ -24,6 +24,15 @@
 #include "beep.h"
 #include "util.h"
 
+
+// http://raspberrypiguide.de/howtos/raspberry-pi-gpio-how-to/
+#define RASPI
+#ifdef RASPI
+#include <wiringPi.h>
+
+#endif
+
+
 int serial_status = 0, fd_serial, numbytes;
 
 double tx_timeout = 0;
@@ -238,6 +247,21 @@ int main(int argc, char *argv[])
 
 	key_release_t1 = fastclock();
 	identifyclient();
+
+
+#ifdef RASPI
+  // Starte die WiringPi-Api (wichtig)
+  if (wiringPiSetup() == -1)
+    return 1;
+ // Schalte GPIO 24 (=WiringPi Pin 5) auf Eingang
+  pinMode(5, INPUT);
+
+while (1)
+{
+if (digitalRead(5)==1)
+exit(0);
+}
+#endif
     
 	/* Main Loop */
 	for(;;) {
