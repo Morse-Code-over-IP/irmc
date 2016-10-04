@@ -204,13 +204,13 @@ int beep_test(void)
 
 static char *device = "hw:0,0"; /* playback device */
 snd_output_t *output = NULL;
+    snd_pcm_t *handle;
 
 int beep_test(void)
 {
     int err;
     double p1,p2,f1,f2;
     unsigned int i,j;
-    snd_pcm_t *handle;
     snd_pcm_sframes_t frames;
     
  
