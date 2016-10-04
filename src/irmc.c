@@ -22,11 +22,13 @@
 #ifdef __MACH__
     #include <mach/clock.h>
     #include <mach/mach.h>
-#else
+#endif
+
+/*
     #include <linux/ioctl.h>
     #include <asm-generic/ioctl.h>
     #include <asm-generic/termios.h>
-#endif 
+*/
 
 //#define DEBUG 1
 
