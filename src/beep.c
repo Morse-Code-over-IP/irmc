@@ -138,7 +138,6 @@ void msleep(int d){
     usleep(d*1000);
 }
 
-#ifdef __MACH__
 int beep(double freq_hz, double duration_sec)
 {
 	if (freq_hz > 0.0) {	
@@ -163,7 +162,6 @@ int beep_close()
 	buzzer_stop();
 	return 0;
 }
-#endif
 
 
 int beep_test(void)
