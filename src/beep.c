@@ -240,7 +240,6 @@ int beep_test(void)
    if (frames > 0 && frames < FRAMES)
        printf("Short write (expected %li, wrote %li)\n", FRAMES, (long)frames);
     }
-    snd_pcm_close(handle);
     return 0;
 }
 
@@ -265,10 +264,12 @@ int beep_init()
    printf("Playback open error: %s\n", snd_strerror(err));
    exit(EXIT_FAILURE);
     }
-
+ return 0;
 }
 int beep_close()
 {
+    snd_pcm_close(handle);
+	return 0;
 }
 
 #endif
