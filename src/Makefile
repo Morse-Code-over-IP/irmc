@@ -1,4 +1,4 @@
-SRC = irmc.c cwprotocol.c beep.c
+SRC = util.c irmc.c cwprotocol.c beep.c
 OBJ = ${SRC:.c=.o}
 LDFLAGS = -lportaudio -lpthread -lm 
 CFLAGS = -Wall -Wno-format-zero-length -Wno-unused-function
