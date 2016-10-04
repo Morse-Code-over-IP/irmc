@@ -24,10 +24,10 @@
 #include "beep.h"
 #include "util.h"
 
-//#define RASPI
 // http://raspberrypiguide.de/howtos/raspberry-pi-gpio-how-to/
 #ifdef RASPI
 #include <wiringPi.h>
+#define TX_RASPI_PIN 5
 #endif
 
 
@@ -60,7 +60,9 @@ void inthandler(int sig)
 	signal(sig, SIG_IGN);
 	send(fd_socket, &disconnect_packet, SIZE_COMMAND_PACKET, 0);	
 	close(fd_socket);
+#ifdef TX_SERIAL
 	close(fd_serial);
+#endif
 	exit(1);
 }
 
@@ -78,7 +80,7 @@ void txloop (void)
 		while(serial_status & TIOCM_DSR) ioctl(fd_serial, TIOCMGET, &serial_status);
 #endif
 #ifdef RASPI
-		while(digitalRead(5)==1) 
+		while(digitalRead(TX_RASPI_PIN)==1) 
 {
 }
 #endif
@@ -95,7 +97,7 @@ void txloop (void)
 			if(serial_status & TIOCM_DSR) break;
 #endif
 #ifdef RASPI
-			if(digitalRead(5)==1) break;
+			if(digitalRead(TX_RASPI_PIN)==1) break;
 #endif
 			tx_timeout = fastclock() - key_release_t1;
 			if(tx_timeout > TX_TIMEOUT) return;
@@ -247,18 +249,18 @@ int main(int argc, char *argv[])
 #ifdef TX_SERIAL
 	fd_serial = open(serialport, O_RDWR | O_NOCTTY | O_NDELAY);
 	if(fd_serial == -1) {
-    	fprintf(stderr,"Unable to open serial port %s.\n", serialport);
+    		fprintf(stderr,"Unable to open serial port %s.\n", serialport);
     	}
 #endif
 
 #ifdef RASPI
-  // Starte die WiringPi-Api (wichtig)
-  if (wiringPiSetup() == -1)
-    return 1;
- // Schalte GPIO 24 (=WiringPi Pin 5) auf Eingang
-  pinMode(5, INPUT);
+	if (wiringPiSetup() == -1)
+	{
+    		fprintf(stderr,"Unable to setup wiringPi for PIN %d\n", TX_RASPI_PIN);
+		exit (1);
+	}
+	pinMode(TX_RASPI_PIN, INPUT);
 
-//if (digitalRead(5)==1)
 #endif
  
 	freeaddrinfo(servinfo); /* all done with this structure */
