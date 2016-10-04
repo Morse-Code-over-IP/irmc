@@ -21,19 +21,6 @@
 
 // raspi wiring: http://raspberrypiguide.de/howtos/raspberry-pi-gpio-how-to/
 
-// Detect OSX
-#ifdef __MACH__
-    #include <mach/clock.h>
-    #include <mach/mach.h>
-#endif 
-
-// Detect Raspi
-#ifdef __ARM
-    #include <linux/ioctl.h>
-    #include <asm-generic/ioctl.h>
-    #include <asm-generic/termios.h>
-#endif
-
 //#define DEBUG 1
 
 #define MAXDATASIZE 1024 // max number of bytes we can get at once 
@@ -63,7 +50,6 @@ char last_sender[16];
 /* settings */
 int translate = 1;
 int audio_status = 1;
-
 
 int kbhit (void)
 {
