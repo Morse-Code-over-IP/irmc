@@ -188,7 +188,7 @@ int beep(double freq_hz, double duration_sec)
     unsigned int i,j;
     snd_pcm_sframes_t frames;
    
- int up_count = (int)(SAMPLE_RATE * duration_sec);
+ unsigned int up_count = (int)(SAMPLE_RATE * duration_sec);
  
  
     p1 = p2 = f1 = f2 = 0.02;//SAMPLE_RATE/freq_hz;//0.02;
