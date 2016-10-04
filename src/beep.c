@@ -220,14 +220,18 @@ int beep(double freq_hz, double duration_sec)
  
  
     p1 = p2 = f1 = f2 = 0.02;
-    for (i = 0; i < 3; i++) {
-   for (j = 0; j < FRAMES*2; j+=2)
+    for (i = 0; i < up_count; ) {
+   for (j = 0; j < FRAMES*2 ; j+=2)
    //for (j = 0; j < up_count*2; j+=2)
    {  
+i += 2;
+if (i<up_count)
+{
        buffer[j] = freq_hz*100.0 * sin(p1);
        buffer[j+1] = freq_hz*100.0 * sin(p2);
        p1 += f1;
        p2 += f2;
+}
    }
 
    frames = snd_pcm_writei(handle, buffer, FRAMES);
