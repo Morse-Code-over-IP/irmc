@@ -19,7 +19,7 @@ options:
 
 irmc:   ${OBJ}
 	@echo CC -o $@
-	@${CC} -o $@ ${OBJ} ${LDFLAGS}
+	@${CC} -o $@ ${OBJ} ${LDFLAGS} 
 
 java:
 	java -jar test/MorseKOB.jar 
@@ -27,5 +27,12 @@ java:
 clean:
 	@echo cleaning
 	@rm -f irmc irmc.core ${OBJ} 
+
+linux: 	${OBJ}
+	@echo CC -o $@
+	@${CC} -o $@ ${OBJ} ${LDFLAGS} -lasound
+
+
+
 install: irmc
 	cp irmc ${INSTALLDIR}
