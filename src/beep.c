@@ -87,7 +87,7 @@ int buzzer_start(void)
     outputParameters.device = Pa_GetDefaultOutputDevice(); /* default output device */
     outputParameters.channelCount = 1;       /* stereo output */
     outputParameters.sampleFormat = paUInt8; /* 32 bit floating point output */
-    outputParameters.suggestedLatency = 30; //Pa_GetDeviceInfo( outputParameters.device )->defaultLowOutputLatency;
+    outputParameters.suggestedLatency = 10; //Pa_GetDeviceInfo( outputParameters.device )->defaultLowOutputLatency;
     outputParameters.hostApiSpecificStreamInfo = NULL;
 
     err = Pa_OpenStream(
