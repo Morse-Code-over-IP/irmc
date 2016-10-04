@@ -24,12 +24,6 @@
     #include <mach/mach.h>
 #endif
 
-/*
-    #include <linux/ioctl.h>
-    #include <asm-generic/ioctl.h>
-    #include <asm-generic/termios.h>
-*/
-
 //#define DEBUG 1
 
 #define MAXDATASIZE 1024 // max number of bytes we can get at once 
