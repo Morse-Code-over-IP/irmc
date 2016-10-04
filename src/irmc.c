@@ -15,8 +15,6 @@
 #include <pthread.h>
 #include <signal.h>
 #include <arpa/inet.h>
-#include <time.h>
-#include <sys/time.h>
 
 
 // raspi wiring: http://raspberrypiguide.de/howtos/raspberry-pi-gpio-how-to/
