@@ -45,6 +45,20 @@ void msleep(int d);
 int beep_test(void);
 #endif
 
+#ifdef ALSA
+#include <stdint.h>
+#include <alsa/asoundlib.h>
+#include <math.h>
+
+static char *device = "hw:0,0"; /* playback device */
+snd_output_t *output = NULL;
+
+#define FRAMES 16384L
+
+int16_t buffer[FRAMES*2]; /* 16bit stereo sound samples */
+
+#endif
+
 // compatibility to old interface
 int beep(double freq_hz, double duration_sec);
 int beep_init();

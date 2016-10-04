@@ -199,16 +199,6 @@ int beep_test(void)
 /*
  * This extra small demo sends sinusoidal  samples to your speakers.
  */
-#include <stdint.h>
-#include <alsa/asoundlib.h>
-#include <math.h>
-
-static char *device = "hw:0,0"; /* playback device */
-snd_output_t *output = NULL;
-
-#define FRAMES 16384L
-
-int16_t buffer[FRAMES*2]; /* 16bit stereo sound samples */
 int beep_test(void)
 {
     int err;
