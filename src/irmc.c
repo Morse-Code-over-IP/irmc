@@ -77,6 +77,11 @@ void txloop (void)
 
 		//printf("space: %i\n", tx_data_packet.code[tx_data_packet.n -1]);
 		while(serial_status & TIOCM_DSR) ioctl(fd_serial, TIOCMGET, &serial_status);
+#ifdef RASPI
+		while(digitalRead(5)==1) 
+{
+}
+#endif
 		key_release_t1 = fastclock();
 
 		tx_data_packet.n++;	
@@ -87,6 +92,9 @@ void txloop (void)
 		while(1){
 			ioctl(fd_serial, TIOCMGET, &serial_status);
 			if(serial_status & TIOCM_DSR) break;
+#ifdef RASPI
+			if(digitalRead(5)==1) break;
+#endif
 			tx_timeout = fastclock() - key_release_t1;
 			if(tx_timeout > TX_TIMEOUT) return;
 		}

@@ -1,6 +1,6 @@
 SRC = irmc.c cwprotocol.c beep.c util.c
 OBJ = ${SRC:.c=.o}
-LDFLAGS = -lportaudio -lpthread -lm -lwiringPi
+LDFLAGS = -lportaudio -lpthread -lm -lWiringPi
 CFLAGS = -Wall -Wno-format-zero-length
 INSTALLDIR = ${HOME}/bin
 
