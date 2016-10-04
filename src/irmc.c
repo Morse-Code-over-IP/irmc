@@ -16,8 +16,6 @@
 #include <signal.h>
 #include <arpa/inet.h>
 
-//#define DEBUG 1
-
 #define MAXDATASIZE 1024 // max number of bytes we can get at once 
 
 #include "cwprotocol.h"
