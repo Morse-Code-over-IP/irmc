@@ -24,12 +24,10 @@
 #include "beep.h"
 #include "util.h"
 
-
-// http://raspberrypiguide.de/howtos/raspberry-pi-gpio-how-to/
 #define RASPI
+// http://raspberrypiguide.de/howtos/raspberry-pi-gpio-how-to/
 #ifdef RASPI
 #include <wiringPi.h>
-
 #endif
 
 

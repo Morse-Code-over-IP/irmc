@@ -1,6 +1,6 @@
 SRC = irmc.c cwprotocol.c beep.c util.c
 OBJ = ${SRC:.c=.o}
-LDFLAGS = -lportaudio -lpthread -lm -lwiringPi
+LDFLAGS = -lportaudio -lpthread -lm 
 CFLAGS = -Wall -Wno-format-zero-length
 INSTALLDIR = ${HOME}/bin
 
@@ -20,6 +20,9 @@ options:
 irmc:   ${OBJ}
 	@echo CC -o $@
 	@${CC} -o $@ ${OBJ} ${LDFLAGS}
+
+raspi:	${OBJ}
+	@${CC} -o irmc ${OBJ} ${LDFLAGS} -lwiringPi
 
 java:
 	java -jar test/MorseKOB.jar 
