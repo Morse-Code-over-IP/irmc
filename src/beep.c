@@ -199,8 +199,8 @@ int beep(double freq_hz, double duration_sec)
 i += 1;
 if (i<up_count)
 {
-       buffer[j] = freq_hz*100.0 * sin(p1);
-       buffer[j+1] = freq_hz*100.0 * sin(p2);
+       buffer[j] = freq_hz*1000.0 * sin(p1);
+       buffer[j+1] = freq_hz*1000.0 * sin(p2);
        p1 += f1;
        p2 += f2;
 }
