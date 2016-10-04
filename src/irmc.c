@@ -33,7 +33,7 @@ int serial_status = 0, fd_serial, numbytes;
 
 double tx_timeout = 0;
 long tx_timer = 0;
-#define TX_WAIT  1000
+#define TX_WAIT  5000
 #define TX_TIMEOUT 240.0 
 #define KEEPALIVE_CYCLE 100
 
