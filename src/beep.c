@@ -164,29 +164,9 @@ int beep_close()
 
 int beep_test(void)
 {
-
-    // notes frequency chart: http://www.phy.mtu.edu/~suits/notefreqs.html
-
     buzzer_start();
     buzzer_set_freq(261);
-    msleep(250);
-    buzzer_set_freq(0);
-    msleep(250);
-    buzzer_set_freq(329);
-    msleep(250);
-    buzzer_set_freq(349);
-    msleep(250);
-    buzzer_set_freq(392);
-    msleep(250);
-    buzzer_set_freq(440);
-    msleep(250);
-    buzzer_set_freq(494);
-    msleep(250);
-    buzzer_beep(523, 200);
-    msleep(250);
-
     buzzer_stop();
-
     return 0;
 }
 
@@ -196,19 +176,11 @@ int beep_test(void)
 
 // Raspi does not work with portaudio?!
 #ifdef ALSA 
-/*
- * This extra small demo sends sinusoidal  samples to your speakers.
- */
-
 // https://www.raspberrypi.org/forums/viewtopic.php?t=84485&p=603451
 
 static char *device = "hw:0,0"; /* playback device */
 snd_output_t *output = NULL;
     snd_pcm_t *handle;
-
-int beep_test(void)
-{
-  }
 
 int beep(double freq_hz, double duration_sec)
 {
