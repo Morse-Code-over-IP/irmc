@@ -45,6 +45,7 @@ long tx_timer = 0;
 #define TX_NONE 0
 #define TX_SERIAL 1
 #define TX_KEYBOARD 2
+#define TX_RASPI 3
 
 long key_press_t1;
 long key_release_t1;
@@ -243,26 +244,25 @@ int main(int argc, char *argv[])
     			fprintf(stderr,"Unable to open serial port %s.\n", serialport);
     		}
 	}
+
+#ifdef RASPI
+  // Starte die WiringPi-Api (wichtig)
+tx_method = TX_RASPI;
+  if (wiringPiSetup() == -1)
+    return 1;
+ // Schalte GPIO 24 (=WiringPi Pin 5) auf Eingang
+  pinMode(5, INPUT);
+
+//if (digitalRead(5)==1)
+#endif
+ 
 	freeaddrinfo(servinfo); /* all done with this structure */
 
 	key_release_t1 = fastclock();
 	identifyclient();
 
 
-#ifdef RASPI
-  // Starte die WiringPi-Api (wichtig)
-  if (wiringPiSetup() == -1)
-    return 1;
- // Schalte GPIO 24 (=WiringPi Pin 5) auf Eingang
-  pinMode(5, INPUT);
-
-while (1)
-{
-if (digitalRead(5)==1)
-exit(0);
-}
-#endif
-    
+   
 	/* Main Loop */
 	for(;;) {
   		if(tx_timer == 0) 
@@ -338,6 +338,17 @@ exit(0);
 				message(1);
 			}
 		}
+
+#ifdef RASPI
+	if (tx_method == TX_RASPI) {
+			if(digitalRead(5)==1){
+				txloop();
+				tx_timer = TX_WAIT;
+				message(1);
+			}
+		}
+
+#endif
 		
 		if(keepalive_t < 0 && tx_timer == 0){
 		#if DEBUG
