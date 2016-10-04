@@ -50,17 +50,6 @@ int translate = 1;
 int audio_status = 1;
 
 
-/* get sockaddr, IPv4 or IPv6: */
-void *get_in_addr(struct sockaddr *sa)
-{
-	if (sa->sa_family == AF_INET) {
-		return &(((struct sockaddr_in*)sa)->sin_addr);
-	}
-
-	return &(((struct sockaddr_in6*)sa)->sin6_addr);
-}
-
-
 // disconnect from the server
 void inthandler(int sig)
 {
