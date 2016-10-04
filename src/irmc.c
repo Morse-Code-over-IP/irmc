@@ -60,6 +60,7 @@ void inthandler(int sig)
 	exit(1);
 }
 
+// main tx loop
 void txloop (void)
 {
 	key_press_t1 = fastclock();
@@ -92,7 +93,7 @@ void txloop (void)
 	}
 }
 
-
+// screen output 
 void message(int msg)
 {       
 	switch(msg){
