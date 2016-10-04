@@ -4,12 +4,12 @@
 #include <unistd.h> // for usleep()
 
 #include "beep.h"
- 
+
+#ifdef PORTAUDIO 
 // http://stackoverflow.com/questions/7678470/generating-sound-of-a-particular-frequency-using-gcc-in-ubuntu
 
 static PaStream *stream;
 static paTestData data;
-
 
 /* This routine will be called by the PortAudio engine when audio is needed.
 ** It may called at interrupt level on some machines so don't do anything
@@ -162,7 +162,6 @@ int beep_close()
 	return 0;
 }
 
-
 int beep_test(void)
 {
 
@@ -190,6 +189,8 @@ int beep_test(void)
 
     return 0;
 }
+
+#endif
 
 
 
