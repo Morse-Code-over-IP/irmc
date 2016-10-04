@@ -208,7 +208,6 @@ snd_output_t *output = NULL;
 
 int beep_test(void)
 {
-    int err;
     double p1,p2,f1,f2;
     unsigned int i,j;
     snd_pcm_sframes_t frames;
