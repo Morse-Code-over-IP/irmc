@@ -50,7 +50,7 @@ int beep_test(void);
 #include <alsa/asoundlib.h>
 #include <math.h>
 
-#define FRAMES 16384L
+#define FRAMES 1024L //16384L
 
 int16_t buffer[FRAMES*2]; /* 16bit stereo sound samples */
 
