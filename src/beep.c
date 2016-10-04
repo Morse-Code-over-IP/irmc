@@ -200,9 +200,10 @@ int beep_test(void)
  * This extra small demo sends sinusoidal  samples to your speakers.
  */
 
+// https://www.raspberrypi.org/forums/viewtopic.php?t=84485&p=603451
+
 static char *device = "hw:0,0"; /* playback device */
 snd_output_t *output = NULL;
-
 
 int beep_test(void)
 {
@@ -212,21 +213,7 @@ int beep_test(void)
     snd_pcm_t *handle;
     snd_pcm_sframes_t frames;
     
-    if ((err = snd_pcm_open(&handle, device, SND_PCM_STREAM_PLAYBACK, 0)) < 0) {
-   printf("Playback open error: %s\n", snd_strerror(err));
-   exit(EXIT_FAILURE);
-    }
-    if ((err = snd_pcm_set_params(handle,
-              SND_PCM_FORMAT_S16_LE,
-              SND_PCM_ACCESS_RW_INTERLEAVED,
-              2,
-              48000,
-              1,
-              500000)) < 0) { /* 0.5sec */
-   printf("Playback open error: %s\n", snd_strerror(err));
-   exit(EXIT_FAILURE);
-    }
-
+ 
     f1 = 0.02;
     f2 = 0.02;
     p1 = p2 = 0.0;
@@ -262,6 +249,23 @@ int beep(double freq_hz, double duration_sec)
 }
 int beep_init()
 {
+    int err;
+
+   if ((err = snd_pcm_open(&handle, device, SND_PCM_STREAM_PLAYBACK, 0)) < 0) {
+   printf("Playback open error: %s\n", snd_strerror(err));
+   exit(EXIT_FAILURE);
+    }
+    if ((err = snd_pcm_set_params(handle,
+              SND_PCM_FORMAT_S16_LE,
+              SND_PCM_ACCESS_RW_INTERLEAVED,
+              2,
+              48000,
+              1,
+              500000)) < 0) { /* 0.5sec */
+   printf("Playback open error: %s\n", snd_strerror(err));
+   exit(EXIT_FAILURE);
+    }
+
 }
 int beep_close()
 {
