@@ -237,7 +237,7 @@ int beep(double freq_hz, double duration_sec)
    if (frames < 0)
        frames = snd_pcm_recover(handle, frames, 0);
    if (frames < 0) {
-       break;
+       //break;
    }
    if (frames > 0 && frames < FRAMES)
        printf("Short write (expected %li, wrote %li)\n", FRAMES, (long)frames);
