@@ -3,8 +3,10 @@
 #include <stdint.h>
 #include <unistd.h> // for usleep()
 #include <portaudio.h>
+
 #include "beep.h"
 
+#define RASPI_AUDIO_LATENCY_FIX (/5.8*30.) // https://app.assembla.com/spaces/portaudio/tickets/246-paex_sine-choppy-on-raspberry-pi---defaultlowoutputlatency-too-low/details
  
 // http://stackoverflow.com/questions/7678470/generating-sound-of-a-particular-frequency-using-gcc-in-ubuntu
 
@@ -88,7 +90,7 @@ int buzzer_start(void)
     outputParameters.device = Pa_GetDefaultOutputDevice(); /* default output device */
     outputParameters.channelCount = 1;       /* stereo output */
     outputParameters.sampleFormat = paUInt8; /* 32 bit floating point output */
-    outputParameters.suggestedLatency = Pa_GetDeviceInfo( outputParameters.device )->defaultLowOutputLatency;
+    outputParameters.suggestedLatency = Pa_GetDeviceInfo( outputParameters.device )->defaultLowOutputLatency * RASPI_AUDIO_LATENCY_FIX; 
     outputParameters.hostApiSpecificStreamInfo = NULL;
 
     err = Pa_OpenStream(
@@ -155,28 +157,10 @@ int beep_init()
 
 int beep_test(void)
 {
-
-    // notes frequency chart: http://www.phy.mtu.edu/~suits/notefreqs.html
-
     buzzer_start();
     buzzer_set_freq(261);
     msleep(250);
     buzzer_set_freq(0);
-    msleep(250);
-    buzzer_set_freq(329);
-    msleep(250);
-    buzzer_set_freq(349);
-    msleep(250);
-    buzzer_set_freq(392);
-    msleep(250);
-    buzzer_set_freq(440);
-    msleep(250);
-    buzzer_set_freq(494);
-    msleep(250);
-    buzzer_beep(523, 200);
-    msleep(250);
-
     buzzer_stop();
-
     return 0;
 }
