@@ -1,6 +1,13 @@
 #include <stdio.h>
 #include <math.h>
+
+#ifdef __MACH__
+#define PORTAUDIO
+#endif
+
+#ifdef PORTAUDIO
 #include <portaudio.h>
+#endif
 
 #define NUM_SECONDS   (5)
 #define SAMPLE_RATE   (48000)
@@ -10,6 +17,7 @@
 #define M_PI  (3.14159265)
 #endif
 
+#ifdef PORTAUDIO
 typedef struct
 {
     uint32_t total_count;
@@ -32,6 +40,7 @@ int buzzer_start(void);
 int buzzer_stop();
 void msleep(int d);
 int beep_test(void);
+#endif
 
 // compatibility to old interface
 int beep(double freq_hz, double duration_sec);

@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <unistd.h> // for usleep()
-#include "portaudio.h"
 
 #include "beep.h"
  
