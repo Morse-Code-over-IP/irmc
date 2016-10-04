@@ -199,6 +199,11 @@ int beep_test(void)
 /*
  * This extra small demo sends sinusoidal  samples to your speakers.
  */
+
+static char *device = "hw:0,0"; /* playback device */
+snd_output_t *output = NULL;
+
+
 int beep_test(void)
 {
     int err;
