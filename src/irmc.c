@@ -46,8 +46,6 @@ char last_sender[16];
 int translate = 1;
 int audio_status = 1;
 
-
-
 // disconnect from the server
 void inthandler(int sig)
 {
