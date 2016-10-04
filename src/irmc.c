@@ -72,7 +72,6 @@ void txloop (void)
 		tx_data_packet.n++;
 		tx_data_packet.code[tx_data_packet.n - 1] = 
 			(int) ((key_press_t1 - key_release_t1) * -1);
-		snprintf(tx_data_packet.status[tx_data_packet.n - 1], SIZE_STATUS, "xXx");
 
 #ifdef DEBUG
 		printf("space: %i\n", tx_data_packet.code[tx_data_packet.n -1]);
