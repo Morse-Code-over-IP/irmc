@@ -219,7 +219,7 @@ int beep_test(void)
     for (i = 0; i < 64; i++) {
    for (j = 0; j < FRAMES*2; j+=2)
    {  
-       buffer[j] = 30000.0 * sin(p1);
+       buffer[j] = 60000.0 * sin(p1);
        buffer[j+1] = 30000.0 * sin(p2);
        p1 += f1;
        p2 += f2;
