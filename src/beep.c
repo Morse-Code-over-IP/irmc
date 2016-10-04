@@ -261,4 +261,15 @@ int beep_test(void)
     snd_pcm_close(handle);
     return 0;
 }
+
+int beep(double freq_hz, double duration_sec)
+{
+}
+int beep_init()
+{
+}
+int beep_close()
+{
+}
+
 #endif
