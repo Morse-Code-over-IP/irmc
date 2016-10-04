@@ -17,3 +17,16 @@ void current_utc_time(struct timespec *ts) {
 }
 
 
+/* a better clock() in milliseconds */
+long fastclock(void)
+{
+	struct timespec t;
+	long r;
+
+	current_utc_time (&t);
+	r = t.tv_sec * 1000;
+	r = r + t.tv_nsec / 1000000;
+	return r;
+}
+
+

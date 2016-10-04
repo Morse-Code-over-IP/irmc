@@ -45,19 +45,6 @@ char last_sender[16];
 /* settings */
 int translate = 1;
 int audio_status = 1;
-
-/* a better clock() in milliseconds */
-long fastclock(void)
-{
-	struct timespec t;
-	long r;
-
-	current_utc_time (&t);
-	r = t.tv_sec * 1000;
-	r = r + t.tv_nsec / 1000000;
-	return r;
-}
-
 int kbhit (void)
 {
   	struct timeval tv;

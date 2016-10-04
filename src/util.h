@@ -9,4 +9,5 @@
 
 
 void current_utc_time(struct timespec *ts);
+long fastclock(void);
 
