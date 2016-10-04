@@ -195,7 +195,7 @@ int beep_test(void)
 
 
 // Raspi does not work with portaudio?!
-#ifdef __ARM1__
+#ifdef ALSA 
 /*
  * This extra small demo sends sinusoidal  samples to your speakers.
  */

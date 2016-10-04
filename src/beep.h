@@ -4,6 +4,10 @@
 #define PORTAUDIO
 #endif
 
+#ifdef __ARM__
+#define ALSA
+#endif
+
 #ifdef PORTAUDIO
 #include <portaudio.h>
 #endif
