@@ -5,7 +5,8 @@
 #endif
 
 #ifdef __arm__
-#define ALSA
+//#define ALSA
+#define PORTAUDIO
 #endif
 
 #ifdef PORTAUDIO

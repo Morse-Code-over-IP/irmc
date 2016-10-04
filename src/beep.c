@@ -193,7 +193,7 @@ return 0;
    
  unsigned int up_count = (unsigned int)(SAMPLE_RATE*1.0 * duration_sec);
  
-printf(" %d %f ", up_count, duration_sec); 
+//printf(" %d %f ", up_count, duration_sec); 
     p1 = p2 = f1 = f2 = 0.02;//SAMPLE_RATE/freq_hz;//0.02;
 i=0;
     for (i = 0; i < up_count; ) {
