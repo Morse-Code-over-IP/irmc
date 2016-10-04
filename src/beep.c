@@ -215,13 +215,16 @@ int beep(double freq_hz, double duration_sec)
   double p1,p2,f1,f2;
     unsigned int i,j;
     snd_pcm_sframes_t frames;
-    
+   
+ int up_count = SAMPLE_RATE * msecs / 1000;
+ 
  
     f1 = 0.02;
     f2 = 0.02;
     p1 = p2 = 0.0;
-    for (i = 0; i < 3; i++) {
-   for (j = 0; j < FRAMES*2; j+=2)
+    //for (i = 0; i < 3; i++) {
+   //for (j = 0; j < FRAMES*2; j+=2)
+   for (j = 0; j < up_count*2; j+=2)
    {  
        buffer[j] = freq_hz*100.0 * sin(p1);
        buffer[j+1] = freq_hz*100.0 * sin(p2);
@@ -238,7 +241,7 @@ int beep(double freq_hz, double duration_sec)
    }
    if (frames > 0 && frames < FRAMES)
        printf("Short write (expected %li, wrote %li)\n", FRAMES, (long)frames);
-    }
+    //}
     return 0;
 
 }
@@ -254,7 +257,7 @@ int beep_init()
               SND_PCM_FORMAT_S16_LE,
               SND_PCM_ACCESS_RW_INTERLEAVED,
               2,
-              48000,
+              SAMPLE_RATE,
               1,
               500000)) < 0) { /* 0.5sec */
    printf("Playback open error: %s\n", snd_strerror(err));
