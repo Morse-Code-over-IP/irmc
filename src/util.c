@@ -17,6 +17,7 @@
 #include <time.h>
 #include <sys/time.h>
 #include <arpa/inet.h>
+#include <unistd.h> // for usleep()
 
 
 // Detect OSX
@@ -97,7 +98,8 @@ void *get_in_addr(struct sockaddr *sa)
 
 
 
-void msleep(int d){
+void msleep(int d)
+{
     usleep(d*1000);
 }
 
