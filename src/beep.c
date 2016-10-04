@@ -6,7 +6,7 @@
 
 #include "beep.h"
 
-#define RASPI_AUDIO_LATENCY_FIX (/5.8*30.) // https://app.assembla.com/spaces/portaudio/tickets/246-paex_sine-choppy-on-raspberry-pi---defaultlowoutputlatency-too-low/details
+#define RASPI_AUDIO_LATENCY_FIX (1./5.8*30.) // https://app.assembla.com/spaces/portaudio/tickets/246-paex_sine-choppy-on-raspberry-pi---defaultlowoutputlatency-too-low/details
  
 // http://stackoverflow.com/questions/7678470/generating-sound-of-a-particular-frequency-using-gcc-in-ubuntu
 
