@@ -40,7 +40,7 @@ long tx_timer = 0;
 /* TX Methods */
 #define TX_NONE 0
 //#define TX_SERIAL 1
-//#define TX_KEYBOARD 2 // not implemented yet
+#define TX_KEYBOARD 2 // not implemented yet
 #define TX_RASPI 3
 
 long key_press_t1;
@@ -261,6 +261,10 @@ int main(int argc, char *argv[])
 	}
 	pinMode(TX_RASPI_PIN, INPUT);
 #endif
+
+#ifdef TX_KEYBOARD
+	prepare_text2morse (WPM_DEFAULT);
+#endif
  
 	freeaddrinfo(servinfo); /* all done with this structure */
 
@@ -366,6 +370,7 @@ int main(int argc, char *argv[])
 		}		
 
 		if(kbhit() && tx_timer == 0){
+			char2morse("s");
 			getchar(); /* flush the buffer */
 		}
 	} /* End of mainloop */

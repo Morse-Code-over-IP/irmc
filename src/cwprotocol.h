@@ -37,6 +37,7 @@ struct data_packet_format{
     
 };
 
+
 // Define the packets used
 #define DEFAULT_CHANNEL 103
 
@@ -58,5 +59,14 @@ extern int tx_sequence, rx_sequence;
 
 extern int fd_socket;
 
+// Morse Code Sender - Timings
+#define WPM_DEFAULT 20
+struct morse_timig_format {
+	int wpm;
+	int dot_len, dash_len;
+	int wordspace_len, charspace_len;
+};
+
+int prepare_text2morse (int wpm);
 
 

@@ -1,7 +1,7 @@
 SRC = irmc.c cwprotocol.c beep.c util.c
 OBJ = ${SRC:.c=.o}
 LDFLAGS = -lportaudio -lpthread -lm 
-CFLAGS = -Wall -Wno-format-zero-length
+CFLAGS = -Wall -Wno-format-zero-length -Wno-parentheses
 INSTALLDIR = ${HOME}/bin
 
 all: options irmc 
