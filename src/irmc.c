@@ -369,10 +369,11 @@ int main(int argc, char *argv[])
 			usleep(50);	
 		}		
 
+#ifdef TX_SERIAL
 		if(kbhit() && tx_timer == 0){
-			char2morse("s");
-			getchar(); /* flush the buffer */
+			char2morse();
 		}
+#endif
 	} /* End of mainloop */
 
 	send(fd_socket, &disconnect_packet, SIZE_COMMAND_PACKET, 0);	

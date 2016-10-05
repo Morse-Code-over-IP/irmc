@@ -68,5 +68,6 @@ struct morse_timig_format {
 };
 
 int prepare_text2morse (int wpm);
+int char2morse(void);
 
 

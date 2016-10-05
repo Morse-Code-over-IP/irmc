@@ -97,10 +97,15 @@ int prepare_text2morse (int wpm)
 	return 0;
 }
 
-int char2morse(char c)
+int char2morse(void)
 {
+	char c='c', d;
 	// why? because!!!
 	// http://stackoverflow.com/questions/1352587/convert-a-string-into-morse-code/1355594^
-	for(;c= c?c:(c=toupper(getchar())-32)?c<0?1:"\x95#\x8CKa`^ZRBCEIQiw#S#nx(37+$6-2&@/4)'18=,*%.:0;?5" [c-12]-34:-3;c/=2)putchar(c/2?46-c%2:32);
+	for(;c= c?c:(c=toupper(getchar())-32)?c<0?1:"\x95#\x8CKa`^ZRBCEIQiw#S#nx(37+$6-2&@/4)'18=,*%.:0;?5" [c-12]-34:-3;c/=2)
+	{
+		d=(c/2?46-c%2:32);
+		putchar (d);
+	}
 	return 0;
 }
