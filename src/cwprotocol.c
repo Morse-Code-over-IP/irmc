@@ -68,7 +68,7 @@ int send_latch (void)
 	tx_data_packet.code[0] = -1;
 	tx_data_packet.code[1] = 1;
 	tx_data_packet.n = 2;
-	for(i = 0; i < 5; i++) send(fd_socket, &tx_data_packet, SIZE_DATA_PACKET, 0);
+	for(i = 0; i < TX_RETRIES; i++) send(fd_socket, &tx_data_packet, SIZE_DATA_PACKET, 0);
 	tx_data_packet.n = 0;
 	return 0;
 }
@@ -81,7 +81,7 @@ int send_unlatch (void)
 	tx_data_packet.code[0] = -1;
 	tx_data_packet.code[1] = 2;
 	tx_data_packet.n = 2;
-	for(i = 0; i < 5; i++) send(fd_socket, &tx_data_packet, SIZE_DATA_PACKET, 0);
+	for(i = 0; i < TX_RETRIES; i++) send(fd_socket, &tx_data_packet, SIZE_DATA_PACKET, 0);
 	tx_data_packet.n = 0;
 	return 0;
 }
@@ -97,15 +97,58 @@ int prepare_text2morse (int wpm)
 	return 0;
 }
 
-int char2morse(void)
+int clean_pkg ()
 {
-	char c='c', d;
+	int i;
+	for (i=0; i<SIZE_CODE; i++)
+	{
+		tx_data_packet.code[i] = 0;	
+	}
+	tx_data_packet.n = 0;	
+	return 0;
+}
+
+int char2morse(int ff)
+{
+	//send_unlatch();
+	clean_pkg();
+
+	int c, d, e;
+	int i=0;
+c=ff;
+	tx_sequence++;
+	tx_data_packet.sequence = tx_sequence;
+
 	// why? because!!!
 	// http://stackoverflow.com/questions/1352587/convert-a-string-into-morse-code/1355594^
-	for(;c= c?c:(c=toupper(getchar())-32)?c<0?1:"\x95#\x8CKa`^ZRBCEIQiw#S#nx(37+$6-2&@/4)'18=,*%.:0;?5" [c-12]-34:-3;c/=2)
-	{
+	for(;c= c?c:(c=toupper(getchar())-32)?c<0?1:"\x95#\x8CKa`^ZRBCEIQiw#S#nx(37+$6-2&@/4)'18=,*%.:0;?5" [c-12]-34:-3;c/=2) {
+//	for(;c= c?c:(c=43-32)?c<0?1:"\x95#\x8CKa`^ZRBCEIQiw#S#nx(37+$6-2&@/4)'18=,*%.:0;?5" [c-12]-34:-3;c/=2) {
+		e=d;
 		d=(c/2?46-c%2:32);
 		putchar (d);
+		if (d == ' ' && e == ' ') break;
+		tx_data_packet.code[i] = -1*morse_timing.dot_len;
+		i++;
+		int j;
+		if (d == '.')
+			j=1;
+		if (d == '-')
+			j=3;
+		if (d == ' ')
+			j=-3;
+		tx_data_packet.code[i] = j*morse_timing.dot_len;
+		i++;
+		//printf ("(%d %d) ",tx_data_packet.code[i-2],tx_data_packet.code[i-1] );
 	}
+	tx_data_packet.code[i] = -1*morse_timing.dot_len;
+	i++;
+	tx_data_packet.n = i;//-2;
+
+	for(i = 0; i < TX_RETRIES; i++) 
+		send(fd_socket, &tx_data_packet, SIZE_DATA_PACKET, 0);
+	tx_data_packet.n = 0;	
+
+//	send_latch();
+
 	return 0;
 }

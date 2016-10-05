@@ -35,7 +35,7 @@ double tx_timeout = 0;
 long tx_timer = 0;
 #define TX_WAIT  5000
 #define TX_TIMEOUT 240.0 
-#define KEEPALIVE_CYCLE 100
+#define BEEP_FREQUENCY 1000.
 
 /* TX Methods */
 #define TX_NONE 0
@@ -320,7 +320,7 @@ int main(int argc, char *argv[])
 								}
 								else
 								{
-									beep(1000.0, length/1000.);
+									beep(BEEP_FREQUENCY, length/1000.);
 								}
 							}
 						}
@@ -368,11 +368,10 @@ int main(int argc, char *argv[])
 		if(tx_timer == 0) {
 			keepalive_t--;
 			usleep(50);	
-		}		
-
-#ifdef TX_SERIAL
+		}
+#ifdef TX_KEYBOARD
 		if(kbhit() && tx_timer == 0){
-			char2morse();
+			char2morse(0);
 		}
 #endif
 	} /* End of mainloop */

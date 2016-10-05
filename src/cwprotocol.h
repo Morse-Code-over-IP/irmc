@@ -9,7 +9,9 @@
 #define SIZE_COMMAND_PACKET 4
 #define SIZE_DATA_PACKET 496
 #define SIZE_DATA_PACKET_PAYLOAD 492 // = SIZE_DATA_PACKET - SIZE_COMMAND_PACKET
-#define TX_RETRIES 3 // how often will the udp packet be sent?
+
+#define TX_RETRIES 5 // how often will the udp packet be sent?
+#define KEEPALIVE_CYCLE 1000 // how often will the keepalive signals be sent?
 
 #define SIZE_ID 128
 #define SIZE_STATUS 128
@@ -61,7 +63,7 @@ extern int tx_sequence, rx_sequence;
 extern int fd_socket;
 
 // Morse Code Sender - Timings
-#define WPM_DEFAULT 20
+#define WPM_DEFAULT 40
 struct morse_timig_format {
 	int wpm;
 	int dot_len, dash_len;
@@ -69,6 +71,6 @@ struct morse_timig_format {
 };
 
 int prepare_text2morse (int wpm);
-int char2morse(void);
+int char2morse(int ff);
 
 
