@@ -9,6 +9,7 @@
 #define SIZE_COMMAND_PACKET 4
 #define SIZE_DATA_PACKET 496
 #define SIZE_DATA_PACKET_PAYLOAD 492 // = SIZE_DATA_PACKET - SIZE_COMMAND_PACKET
+#define TX_RETRIES 3 // how often will the udp packet be sent?
 
 #define SIZE_ID 128
 #define SIZE_STATUS 128

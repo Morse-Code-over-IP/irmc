@@ -334,7 +334,8 @@ int main(int argc, char *argv[])
 		if(tx_data_packet.n > 1 ){
 			tx_sequence++;
 			tx_data_packet.sequence = tx_sequence;
-			for(i = 0; i < 5; i++) send(fd_socket, &tx_data_packet, SIZE_DATA_PACKET, 0);
+			for(i = 0; i < TX_RETRIES; i++) 
+				send(fd_socket, &tx_data_packet, SIZE_DATA_PACKET, 0);
 		#if DEBUG		
 			printf("irmc: sent data packet.\n");
 		#endif
@@ -350,7 +351,7 @@ int main(int argc, char *argv[])
 #endif
 
 #ifdef RASPI
-		if(digitalRead(5)==1){
+		if(digitalRead(TX_RASPI_PIN)==1){
 			txloop();
 			tx_timer = TX_WAIT;
 			message(1);
