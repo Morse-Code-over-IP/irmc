@@ -105,13 +105,14 @@ int clean_pkg ()
 		tx_data_packet.code[i] = 0;	
 	}
 	tx_data_packet.n = 0;	
+	sprintf(tx_data_packet.status, "");
 	return 0;
 }
 
 int char2morse(int ff)
 {
 	//send_unlatch();
-	clean_pkg();
+	//clean_pkg();
 
 	int c, d, e;
 	int i=0;
@@ -125,7 +126,7 @@ c=ff;
 //	for(;c= c?c:(c=43-32)?c<0?1:"\x95#\x8CKa`^ZRBCEIQiw#S#nx(37+$6-2&@/4)'18=,*%.:0;?5" [c-12]-34:-3;c/=2) {
 		e=d;
 		d=(c/2?46-c%2:32);
-		putchar (d);
+		//putchar (d);
 		if (d == ' ' && e == ' ') break;
 		tx_data_packet.code[i] = -1*morse_timing.dot_len;
 		i++;
