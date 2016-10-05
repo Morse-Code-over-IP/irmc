@@ -47,6 +47,7 @@ struct data_packet_format{
 /* Define functions provided by cwprotocol */ 
 int prepare_id (struct data_packet_format *id_packet, char *id);
 int prepare_tx (struct data_packet_format *tx_packet, char *id);
+int clean_tx (void);
 void identifyclient (void);
 int send_latch (void);
 int send_unlatch (void);
@@ -72,5 +73,4 @@ struct morse_timig_format {
 
 int prepare_text2morse (int wpm);
 int char2morse(int ff);
-
 

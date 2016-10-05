@@ -97,34 +97,39 @@ int prepare_text2morse (int wpm)
 	return 0;
 }
 
-int clean_pkg ()
+int clean_tx (void)
 {
 	int i;
 	for (i=0; i<SIZE_CODE; i++)
-	{
 		tx_data_packet.code[i] = 0;	
-	}
+	for (i=0; i<SIZE_STATUS; i++)
+		tx_data_packet.status[i] = ' ';
 	tx_data_packet.n = 0;	
-	sprintf(tx_data_packet.status, "");
 	return 0;
 }
 
+// FIXME: This function is really nasty, even for this code :)
 int char2morse(int ff)
 {
-	//send_unlatch();
-	//clean_pkg();
+	clean_tx();
 
 	int c, d, e;
+	int a=0, b=0;
 	int i=0;
+	int k=0;
 c=ff;
 	tx_sequence++;
 	tx_data_packet.sequence = tx_sequence;
 
 	// why? because!!!
 	// http://stackoverflow.com/questions/1352587/convert-a-string-into-morse-code/1355594^
-	for(;c= c?c:(c=toupper(getchar())-32)?c<0?1:"\x95#\x8CKa`^ZRBCEIQiw#S#nx(37+$6-2&@/4)'18=,*%.:0;?5" [c-12]-34:-3;c/=2) {
-//	for(;c= c?c:(c=43-32)?c<0?1:"\x95#\x8CKa`^ZRBCEIQiw#S#nx(37+$6-2&@/4)'18=,*%.:0;?5" [c-12]-34:-3;c/=2) {
+	for(;c= c?c:(c=a=toupper(getchar())-32)?c<0?1:"\x95#\x8CKa`^ZRBCEIQiw#S#nx(37+$6-2&@/4)'18=,*%.:0;?5" [c-12]-34:-3;c/=2) {
 		e=d;
+		if (a!=b) {
+			tx_data_packet.status[k] = a+32; //putchar (a+32);
+			k++;
+		}
+		b=a;
 		d=(c/2?46-c%2:32);
 		//putchar (d);
 		if (d == ' ' && e == ' ') break;
@@ -143,13 +148,11 @@ c=ff;
 	}
 	tx_data_packet.code[i] = -1*morse_timing.dot_len;
 	i++;
-	tx_data_packet.n = i;//-2;
+	tx_data_packet.n = i;
 
 	for(i = 0; i < TX_RETRIES; i++) 
 		send(fd_socket, &tx_data_packet, SIZE_DATA_PACKET, 0);
 	tx_data_packet.n = 0;	
-
-//	send_latch();
 
 	return 0;
 }
