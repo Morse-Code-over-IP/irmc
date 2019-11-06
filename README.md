@@ -9,9 +9,9 @@ make
 
 ### On Raspi (GPIO Interface)
 Follow: http://wiringpi.com/download-and-install/
-```
-# make raspi
-```
+
+    # make raspi
+
 
 ## On OSX
 brew install portaudio
