@@ -4,8 +4,8 @@ IRMC stands for Internet Relay Morse Code and is an implementation of [MOIP](htt
 
 # Building 
 ## On Linux
-sudo apt-get install -y alsa-oss oss-compat build-essential autoconf libao-dev libtool libportaudio-dev portaudio19-dev
-make 
+    # sudo apt-get install -y alsa-oss oss-compat build-essential autoconf libao-dev libtool libportaudio-dev portaudio19-dev
+    # make 
 
 ### On Raspi (GPIO Interface)
 Follow: http://wiringpi.com/download-and-install/
@@ -14,8 +14,8 @@ Follow: http://wiringpi.com/download-and-install/
 
 
 ## On OSX
-brew install portaudio
-make
+    # brew install portaudio
+    # make
 
 # Hardware interface options
 A good description on how to build different interfaces (telegraph key, sounder or both) 
