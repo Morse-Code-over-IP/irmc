@@ -9,8 +9,7 @@ IRMC stands for Internet Relay Morse Code and is an implementation of [MOIP](htt
     # make 
 
 ### On Raspi (GPIO Interface)
-Follow: http://wiringpi.com/download-and-install/
-
+    # sudo apt-get install wiringpi
     # cd src
     # make raspi
 
@@ -20,7 +19,7 @@ Follow: http://wiringpi.com/download-and-install/
     # make
 
 # Testing
-   # ./irmc  -h morsecode.dc3.com -c 205
+    # ./irmc  -h morsecode.dc3.com -c 205
 
 # Hardware interface options
 A good description on how to build different interfaces (telegraph key, sounder or both) 
