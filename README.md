@@ -5,17 +5,22 @@ IRMC stands for Internet Relay Morse Code and is an implementation of [MOIP](htt
 # Building 
 ## On Linux
     # sudo apt-get install -y alsa-oss oss-compat build-essential autoconf libao-dev libtool libportaudio-dev portaudio19-dev
+    # cd src
     # make 
 
 ### On Raspi (GPIO Interface)
 Follow: http://wiringpi.com/download-and-install/
 
+    # cd src
     # make raspi
-
 
 ## On OSX
     # brew install portaudio
+    # cd src
     # make
+
+# Testing
+   # ./irmc  -h morsecode.dc3.com -c 205
 
 # Hardware interface options
 A good description on how to build different interfaces (telegraph key, sounder or both) 
