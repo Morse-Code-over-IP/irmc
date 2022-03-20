@@ -1,6 +1,6 @@
 irmc - Internet Relay Morse Code
 ================================
-IRMC stands for Internet Relay Morse Code and is an implementation of [MOIP](http://8ch9azbsfifz.github.io/moip/).
+IRMC stands for Internet Relay Morse Code and is an implementation of [MOIP](http://morse-code-over-ip.github.io/moip/).
 
 # Building 
 ## On Linux
